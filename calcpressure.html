@@ -178,14 +178,14 @@
         const cookieName = "token";
         if (document.cookie.indexOf(cookieName + "=") === -1) {
           // Cookie does not exist, redirect to login page or display error message
-          window.location.href = "login.html";
+          window.location.href = "index.html";
           return;
         }
       };
       function handleLogOut() {
         document.cookie = "token=" + ";max-age=1;path=/";
         console.log("cookie cleared");
-        window.location.href = "login.html";
+        window.location.href = "index.html";
       }
       // FORM
       const form = document.getElementById("calculation-form");

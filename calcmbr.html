@@ -280,20 +280,11 @@
               />
             </div> -->
             <div class="fields">
-              <label>Air Required (CMH)</label>
+              <label>Air Required for Aeration (CMH)</label>
               <input
                 type="text"
                 id="airRequired"
                 class="airRequired"
-                value=""
-              />
-            </div>
-            <div class="fields">
-              <label>Total Air for Aeration (CMH)</label>
-              <input
-                type="text"
-                id="totalAirForAeration"
-                class="totalAirForAeration"
                 value=""
               />
             </div>
@@ -320,7 +311,7 @@
               />
             </div>
             <div class="fields">
-              <label>Total Air Required </label>
+              <label>Total Air Required (BOD + NH4) (CMH) </label>
               <input
                 type="text"
                 id="totalAirRequired"
@@ -524,11 +515,6 @@
 
         //no Of Diffuser for At
         const noOfDiffuserforAt = airRequired / difCalculation;
-
-        //total Air For Aeration
-        const totalAirForAeration = airRequired + membraneAir;
-        document.getElementById("totalAirForAeration").value =
-          totalAirForAeration;
 
         //nh4 load
         const nh4load = (nh4 * flow) / 1000;

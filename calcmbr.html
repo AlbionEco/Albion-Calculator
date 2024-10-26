@@ -547,7 +547,7 @@
         document.getElementById("airRequired").value = airRequired;
 
         //no Of Diffuser for At
-        const noOfDiffuserforAt = Number(airRequired / difCalculation).toFixed(0);
+        const noOfDiffuserforAt = Math.round(airRequired / difCalculation);
 
         //total Air For Aeration
         const totalAirForAeration = airRequired + membraneAir;
@@ -573,7 +573,7 @@
         document.getElementById("totalAirRequired").value = totalAirRequired;
 
         //total diffuser
-        const noOfdiffuserfornh4Removal = Number(airRequiredForNh4 / difCalculation).toFixed(0);
+        const noOfdiffuserfornh4Removal = Math.round(airRequiredForNh4 / difCalculation);
         const totaldiffuser =
           (noOfdiffuserfornh4Removal + noOfDiffuserforAt)
         .toFixed(0);

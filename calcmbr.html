@@ -280,11 +280,20 @@
               />
             </div> -->
             <div class="fields">
-              <label>Air Required for Aeration (CMH)</label>
+              <label>Air Required (CMH)</label>
               <input
                 type="text"
                 id="airRequired"
                 class="airRequired"
+                value=""
+              />
+            </div>
+            <div class="fields">
+              <label>Total Air for Aeration (CMH)</label>
+              <input
+                type="text"
+                id="totalAirForAeration"
+                class="totalAirForAeration"
                 value=""
               />
             </div>
@@ -311,7 +320,7 @@
               />
             </div>
             <div class="fields">
-              <label>Total Air Required (BOD + NH4) (CMH) </label>
+              <label>Total Air Required </label>
               <input
                 type="text"
                 id="totalAirRequired"
@@ -382,6 +391,7 @@
         let o2transferrate = 0;
         const o2transfer = document.getElementById("o2transfer").value;
         const air = document.getElementById("air").value;
+        const  difCalculation = 0;
         if (o2transfer === "airfine1") {
           if (air === "3SWD") {
             o2transferrate = 0.15;
@@ -408,6 +418,29 @@
           }
         }
 
+        if (o2transfer === "airfine1") {
+          if (o2transferrate = 0.15){
+            difCalculation = 7.5;
+          } else if (o2transferrate = 0.2) {
+            difCalculation = 6.25;
+          } else if (o2transferrate = 0.3) {
+            difCalculation = 5.5;
+          } else {
+            difCalculation = " Something Wrong try again";
+          }
+        } else {
+          if (o2transferrate = 0.195) {
+            difCalculation = 5.5;
+          } else if (o2transferrate = 0.26) {
+            difCalculation = 5.5;
+          } else if (o2transferrate = 0.325) {
+            difCalculation = 5.5;
+          } else {
+            o2transferrate = " Something Wrong try again";
+          }
+        }
+
+
         const bodI = bodi / 1000;
         const workingHr = 24;
         const o2req = 1.2;
@@ -417,9 +450,9 @@
         const density = 1.2;
         const percentageofo2 = 0.215;
         const diflength = 1;
-        const difCalculation = 10;
         const depth = 0.2;
 
+       
         document.querySelectorAll(".resultcontainer").forEach((element) => {
           element.style.display = "block";
         });
@@ -515,6 +548,11 @@
 
         //no Of Diffuser for At
         const noOfDiffuserforAt = airRequired / difCalculation;
+
+        //total Air For Aeration
+        const totalAirForAeration = airRequired + membraneAir;
+        document.getElementById("totalAirForAeration").value =
+          totalAirForAeration;
 
         //nh4 load
         const nh4load = (nh4 * flow) / 1000;

@@ -574,9 +574,9 @@
 
         //total diffuser
         const noOfdiffuserfornh4Removal = airRequiredForNh4 / difCalculation;
-        const totaldiffuser = Number(
-          noOfdiffuserfornh4Removal + noOfDiffuserforAt
-        ).toFixed(0);
+        const totaldiffuser =
+          (noOfdiffuserfornh4Removal + noOfDiffuserforAt)
+        .toFixed(0);
         document.getElementById("totaldiffuser").value = totaldiffuser;
 
         //mbr Air Required

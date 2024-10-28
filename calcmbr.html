@@ -319,7 +319,7 @@
                 value=""
               />
             </div>
-            <div class="fields">
+            <!-- <div class="fields">
               <label>Total Air Required </label>
               <input
                 type="text"
@@ -327,7 +327,7 @@
                 class="totalAirRequired"
                 value=""
               />
-            </div>
+            </div> -->
             <div class="fields">
               <label>Total Diffusers</label>
               <input
@@ -570,7 +570,7 @@
 
         //total Air Required
         const totalAirRequired = airRequired + airRequiredForNh4;
-        document.getElementById("totalAirRequired").value = totalAirRequired;
+        //document.getElementById("totalAirRequired").value = totalAirRequired;
 
         //total diffuser
         const noOfdiffuserfornh4Removal = Math.round(airRequiredForNh4 / difCalculation);

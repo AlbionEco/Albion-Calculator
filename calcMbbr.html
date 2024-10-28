@@ -24,7 +24,6 @@
         class="btn"
         style="background-color: white; color: black"
         onclick="handleLogOut()"
-         href="index.html"
         >Logout</a
       >
       <a class="btn" href="calcpressure.html">Filter Pressure</a>
@@ -397,9 +396,9 @@
         const o2req = 1.2;
         const alpha = 0.8;
         const beta = 0.7;
-        const density = 1.2;
+        const density = 1.19;
         const percentageofo2 = 0.215;
-        let depth = 0;
+        let depth = o2rate;
         const diflength = 1;
         const o2nh4 = 4.6;
 
@@ -517,6 +516,31 @@
           }
           // document.getElementById("o2rate").value = o2rate;
         }
+        let difcalc = 0;
+
+        if (o2transfer === "airfine1") {
+          if ( o2rate = 0.15) {
+            difcalc = 7.5;
+          } else if (o2rate = 0.2) {
+            difcalc = 6.25;
+          } else if (o2rate = 0.3) {
+            difcalc = 5.5;
+          }  else {
+            o2rate = " Something Wrong try again";
+          }
+          // document.getElementById("o2rate").value = o2rate;
+        } else {
+          if (o2rate = 0.195) {
+            difcalc = 12;
+          } else if (o2rate = 0.26) {
+            difcalc = 10;
+          } else if (o2rate = 0.325) {
+            difcalc = 8.5;
+          }  else {
+            o2rate = " Something Wrong try again";
+          }
+          // document.getElementById("o2rate").value = o2rate;
+        }
 
         //air required for defuser
         const airrequire = calculateairrequire(
@@ -530,21 +554,6 @@
         );
         document.getElementById("airrequired").value = airrequire;
 
-        //difcalc
-        if (o2rate === 0.15) {
-          depth = 7.5;
-        } else if (o2rate === 0.2) {
-          depth = 6.25;
-        } else if (o2rate === 0.3) {
-          depth = 5.5;
-        } else if (o2rate === 0.195) {
-          depth = 12;
-        } else if (o2rate === 0.26) {
-          depth = 10;
-        } else if (o2rate === 0.325) {
-          depth = 8.5;
-        }
-        const difcalc = depth;
 
         //no of difuserf
         const nodif = calculatenodif(airrequire, difcalc);
@@ -568,7 +577,7 @@
         document.getElementById("airreqnh4").value = airreqnh4;
 
         //air required bdiffuser calculation
-        const airbydiffuser = airreqnh4 / difcalc;
+        const airbydiffuser = Math.round(airreqnh4 / difcalc);
 
         //net total air
         const nettotalair = parseFloat(airrequire + airreqnh4).toFixed(2);

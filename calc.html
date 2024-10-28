@@ -305,12 +305,12 @@
         const o2req = 1.2;
         const alpha = 0.8;
         const beta = 0.7;
-        const density = 1.2;
+        const density = 1.19;
         const percentageofo2 = 0.215;
-        let depth = 0;
+        let depth = o2rate;
         const diflength = 1;
         const o2nh4 = 4.6;
-
+let difcalc = 0;
         document.querySelectorAll(".resultcontainer").forEach((element) => {
           element.style.display = "block";
         });
@@ -431,19 +431,19 @@
 
         //difcalc
         if (o2rate === 0.15) {
-          depth = 7.5;
+          difcalc = 7.5;
         } else if (o2rate === 0.2) {
-          depth = 6.25;
+          difcalc = 6.25;
         } else if (o2rate === 0.3) {
-          depth = 5.5;
+          difcalc = 5.5;
         } else if (o2rate === 0.195) {
-          depth = 12;
+          difcalc = 12;
         } else if (o2rate === 0.26) {
-          depth = 10;
+          difcalc = 10;
         } else if (o2rate === 0.325) {
-          depth = 8.5;
+          difcalc = 8.5;
         }
-        const difcalc = depth;
+       
 
         //no of difuserf
         const nodif = calculatenodif(airrequire, difcalc);
@@ -467,7 +467,7 @@
         document.getElementById("airreqnh4").value = airreqnh4;
 
         //air required bdiffuser calculation
-        const airbydiffuser = airreqnh4 / difcalc;
+        const airbydiffuser = Math.round(airreqnh4 / difcalc);
 
         //net total air
         const nettotalair = parseFloat(airrequire + airreqnh4).toFixed(2);
@@ -556,7 +556,7 @@
       }
 
       function calculatenodif(airrequire, difcalc) {
-        return parseFloat(airrequire / difcalc).toFixed(2);
+        return Math.round(airrequire / difcalc);
       }
 
       function calculatenh4Load(nh4, flow) {

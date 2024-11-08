@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,16 +11,18 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
     integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <style>
-      #table td{
-        padding: 15px 10px;
-      }
-      #table input{
-        padding: 10px 5px;
-        width: 80%;
-      }
-    </style>
+  <style>
+    #table td {
+      padding: 15px 10px;
+    }
+
+    #table input {
+      padding: 10px 5px;
+      width: 80%;
+    }
+  </style>
 </head>
+
 <body>
   <div class="topnav">
     <a class="btn" style="background-color: white; color: black" onclick="handleLogOut()">Logout</a>
@@ -70,36 +73,24 @@
             </tr>
             <tr>
               <td>Required PPM (ppm)</td>
-              <td><input type="text" required id="requiredPPMHypo" style="border-color: darkblue;" value="10"
-                ></td>
-              <td><input type="text" required id="requiredPPMNaoh" style="border-color: darkblue;" value="5000"
-                ></td>
-              <td><input type="text" required id="requiredPPMCitric" style="border-color: darkblue;" value="10"
-                ></td>
-              <td><input type="text" required id="requiredPPMCLO2" style="border-color: darkblue;" value="0.4"
-                ></td>
+              <td><input type="text" required id="requiredPPMHypo" ></td>
+              <td><input type="text" required id="requiredPPMNaoh" ></td>
+              <td><input type="text" required id="requiredPPMCitric" ></td>
+              <td><input type="text" required id="requiredPPMCLO2" ></td>
             </tr>
             <tr>
               <td>Capacity of Water (L)</td>
-              <td><input type="text" required id="CapacityOfWaterHypo" style="border-color: darkblue;" value="3000"
-                ></td>
-              <td><input type="text" required id="CapacityOfWaterNaoh" style="border-color: darkblue;" value="15000"
-                ></td>
-              <td><input type="text" required id="CapacityOfWaterCitric" style="border-color: darkblue;" value="3000"
-                ></td>
-              <td><input type="text" required id="CapacityOfWaterCLO2" style="border-color: darkblue;" value="100000"
-                ></td>
+              <td><input type="text" required id="CapacityOfWaterHypo" ></td>
+              <td><input type="text" required id="CapacityOfWaterNaoh" ></td>
+              <td><input type="text" required id="CapacityOfWaterCitric" ></td>
+              <td><input type="text" required id="CapacityOfWaterCLO2" ></td>
             </tr>
             <tr>
               <td>Chemical Conc.</td>
-              <td><input type="text" required id="ChemicalConcHypo" style="border-color: darkblue;" value="0.1"
-                ></td>
-              <td><input type="text" required id="ChemicalConcNaoh" style="border-color: darkblue;" value="0.48"
-                ></td>
-              <td><input type="text" required id="ChemicalConcCitric" style="border-color: darkblue;" value="0.3"
-                ></td>
-              <td><input type="text" required id="ChemicalConcCLO2" style="border-color: darkblue;" value="0.15"
-                ></td>
+              <td><input type="text" required id="ChemicalConcHypo" ></td>
+              <td><input type="text" required id="ChemicalConcNaoh" ></td>
+              <td><input type="text" required id="ChemicalConcCitric" ></td>
+              <td><input type="text" required id="ChemicalConcCLO2" ></td>
             </tr>
             <tr>
               <td>Chemical Qty (kgs)</td>
@@ -132,7 +123,7 @@
               <label for="Membrane">Blufox Membrane</label>
             </div>
           </div>
-           <!-- membrane selection radio button         end -->
+          <!-- membrane selection radio button         end -->
         </div>
         <!-- Tables of membrane             start-->
         <div id="sumitomotable" style="display: none;">
@@ -216,7 +207,7 @@
           </table>
         </div>
         <!-- Tables of membrane             end-->
-<!-- capacity of doing pump      Backwash             start -->
+        <!-- capacity of doing pump      Backwash             start -->
         <div>
           <h2>Capacity of Dosing Pump & days to store chemical-Backwash</h2>
           <hr style="
@@ -273,11 +264,11 @@
             </div>
           </div>
         </div>
-<!-- capacity of doing pump    Backwash               end -->
- <!-- capacity of doing pump   disinfection                start -->
- <div>
-  <h2>Capacity of Dosing Pump & days to store chemical-Disinfection</h2>
-  <hr style="
+        <!-- capacity of doing pump    Backwash               end -->
+        <!-- capacity of doing pump   disinfection                start -->
+        <div>
+          <h2>Capacity of Dosing Pump & days to store chemical-Disinfection</h2>
+          <hr style="
 height: 3px;
 border: none;
 background-color: rgb(130, 219, 129);
@@ -285,53 +276,53 @@ border-radius: 5px;
 width: 500px;
 margin-bottom: 50px;
 align-self: flex-start;" />
-  <div class="entercontainer" style="margin-top: 20px">
-    <div class="fields">
-      <label>Capacity of Plant (KLD)</label>
-      <input type="number" id="CapacityOfPlant2" class="CapacityOfPlant2" />
-    </div>
-    <div class="fields">
-      <label>Total Minutes in a Day (Minutes)</label>
-      <input type="number" id="TotalMinADay2" class="TotalMinADay2" />
-    </div>
-    <div class="fields">
-      <label>No of Days to refill (days)</label>
-      <input type="text" id="NoOfDaysToRefill2" class="NoOfDaysToRefill2" />
-    </div>
-    <div class="fields">
-      <label>Capacity of Tank (L)</label>
-      <input type="number" id="CapacityOfTank2" class="CapacityOfTank2" />
-    </div>
-    <div class="fields">
-      <label>Chemical required/day (kgs)</label>
-      <input type="text" id="chemicalRequiredPerDay2" class="chemicalRequiredPerDay2" />
-    </div>
-  </div>
-  <div class="resultcontainer">
-    <div class="fields">
-      <label>Flow (m<sup>3</sup>/hr)</label>
-      <input type="text" id="Flow2" class="Flow2" />
-    </div>
-    <div class="fields">
-      <label>Capacity of Water/day (LPD) <br>
-        (as backwash runs for 1 min in every hour for both blufox and sumitomo)</label>
-      <input type="text" id="CapacityOfWaterPerday2" class="CapacityOfWaterPerday2" />
-    </div>
-    <div class="fields">
-      <label>Total chemical (kg)</label>
-      <input type="text" id="TotalChemical2" class="TotalChemical2" />
-    </div>
-    <div class="fields">
-      <label>Dosing Pump Capacity (LPH)</label>
-      <input type="text" id="DosingPumpcapacity2" class="DosingPumpcapacity2" />
-    </div>
-  </div>
+          <div class="entercontainer" style="margin-top: 20px">
+            <div class="fields">
+              <label>Capacity of Plant (KLD)</label>
+              <input type="number" id="CapacityOfPlant2" class="CapacityOfPlant2" />
+            </div>
+            <div class="fields">
+              <label>Total Minutes in a Day (Minutes)</label>
+              <input type="number" id="TotalMinADay2" class="TotalMinADay2" />
+            </div>
+            <div class="fields">
+              <label>No of Days to refill (days)</label>
+              <input type="text" id="NoOfDaysToRefill2" class="NoOfDaysToRefill2" />
+            </div>
+            <div class="fields">
+              <label>Capacity of Tank (L)</label>
+              <input type="number" id="CapacityOfTank2" class="CapacityOfTank2" />
+            </div>
+            <div class="fields">
+              <label>Chemical required/day (kgs)</label>
+              <input type="text" id="chemicalRequiredPerDay2" class="chemicalRequiredPerDay2" />
+            </div>
+          </div>
+          <div class="resultcontainer">
+            <div class="fields">
+              <label>Flow (m<sup>3</sup>/hr)</label>
+              <input type="text" id="Flow2" class="Flow2" />
+            </div>
+            <div class="fields">
+              <label>Capacity of Water/day (LPD) <br>
+                (as backwash runs for 1 min in every hour for both blufox and sumitomo)</label>
+              <input type="text" id="CapacityOfWaterPerday2" class="CapacityOfWaterPerday2" />
+            </div>
+            <div class="fields">
+              <label>Total chemical (kg)</label>
+              <input type="text" id="TotalChemical2" class="TotalChemical2" />
+            </div>
+            <div class="fields">
+              <label>Dosing Pump Capacity (LPH)</label>
+              <input type="text" id="DosingPumpcapacity2" class="DosingPumpcapacity2" />
+            </div>
+          </div>
 
 
-  <!-- SUBMIT BUTTON  -->
-  <button type="submit">Submit</button>
-</div>
-<!-- capacity of doing pump disinfection                  end -->
+          <!-- SUBMIT BUTTON  -->
+          <button type="submit">Submit</button>
+        </div>
+        <!-- capacity of doing pump disinfection                  end -->
         <!-- PRINT BUTTON -->
         <div class="btns">
           <button id="print-btn" onclick="window.print()">Print</button>
@@ -356,9 +347,9 @@ align-self: flex-start;" />
       window.location.href = "index.html";
     }
 
- // table data
- function myFunction() {
-  document.querySelectorAll(".resultcontainer").forEach((element) => {
+    // table data
+    function myFunction() {
+      document.querySelectorAll(".resultcontainer").forEach((element) => {
         element.style.display = "none";
       });
 
@@ -392,7 +383,7 @@ align-self: flex-start;" />
       document.getElementById("RatePerKgHypo").innerHTML = (ChemicalQtyHypo * 25);
       document.getElementById("RatePerKgCLO2").innerHTML = (ChemicalQtyCLO2 * 1800);
 
-     
+
     }
 
     //table to display
@@ -426,7 +417,7 @@ align-self: flex-start;" />
     // start capacity of dosing pump - backwash
     let TotalMinADay = 0;
 
-   
+
     function handleSubmit(event) {
       event.preventDefault();
       //start capacity of dosing pump backwash
@@ -435,8 +426,8 @@ align-self: flex-start;" />
       const CapacityOfTank = document.getElementById('CapacityOfTank').value;
 
       const ChemicalQtyHypo = document.getElementById('ChemicalQtyHypo').innerHTML;
-      const chemicalRequiredPerDay =ChemicalQtyHypo;
-      document.getElementById('chemicalRequiredPerDay').value= chemicalRequiredPerDay;
+      const chemicalRequiredPerDay = ChemicalQtyHypo;
+      document.getElementById('chemicalRequiredPerDay').value = chemicalRequiredPerDay;
 
       const Flow = (CapacityOfPlant / 20);
       document.getElementById('Flow').value = Flow;
@@ -446,13 +437,13 @@ align-self: flex-start;" />
 
 
 
-    const CapacityOfWaterPerday = ((BackwashFlow * 1000) / 60) * TotalMinADay;
+      const CapacityOfWaterPerday = ((BackwashFlow * 1000) / 60) * TotalMinADay;
       document.getElementById("CapacityOfWaterPerday").value = CapacityOfWaterPerday;
 
       const TotalChemical = chemicalRequiredPerDay * NoOfDaysToRefill
       document.getElementById('TotalChemical').value = TotalChemical;
 
-      const DosingPumpcapacity = (( TotalChemical + Number(CapacityOfTank) ) / (TotalMinADay * NoOfDaysToRefill)) * 60;
+      const DosingPumpcapacity = ((TotalChemical + Number(CapacityOfTank)) / (TotalMinADay * NoOfDaysToRefill)) * 60;
       document.getElementById("DosingPumpcapacity").value = DosingPumpcapacity;
 
       document.querySelectorAll(".resultcontainer").forEach((element) => {
@@ -460,17 +451,17 @@ align-self: flex-start;" />
       });
 
 
-       // end capacity of dosing pump - backwash
+      // end capacity of dosing pump - backwash
 
-//start disinfection
-       const CapacityOfPlant2 = document.getElementById('CapacityOfPlant2').value;
-      const NoOfDaysToRefill2 = document.getElementById('NoOfDaysToRefill2').value ;
+      //start disinfection
+      const CapacityOfPlant2 = document.getElementById('CapacityOfPlant2').value;
+      const NoOfDaysToRefill2 = document.getElementById('NoOfDaysToRefill2').value;
       const CapacityOfTank2 = document.getElementById('CapacityOfTank2').value;
       const TotalMinADay2 = document.getElementById('TotalMinADay2').value;
 
       const ChemicalQtyCLO2 = document.getElementById('ChemicalQtyCLO2').innerHTML;
       const chemicalRequiredPerDay2 = ChemicalQtyCLO2;
-       document.getElementById('chemicalRequiredPerDay2').value= chemicalRequiredPerDay2;
+      document.getElementById('chemicalRequiredPerDay2').value = chemicalRequiredPerDay2;
 
 
       const Flow2 = (CapacityOfPlant2 / 20);
@@ -482,9 +473,9 @@ align-self: flex-start;" />
       const TotalChemical2 = chemicalRequiredPerDay2 * NoOfDaysToRefill2
       document.getElementById('TotalChemical2').value = TotalChemical2;
 
-      const DosingPumpcapacity2 = (( TotalChemical2 + Number(CapacityOfTank2) ) / (20 * NoOfDaysToRefill2)) ;
+      const DosingPumpcapacity2 = ((TotalChemical2 + Number(CapacityOfTank2)) / (20 * NoOfDaysToRefill2));
       document.getElementById("DosingPumpcapacity2").value = DosingPumpcapacity2;
-//end disinfection
+      //end disinfection
     }
   </script>
 </body>

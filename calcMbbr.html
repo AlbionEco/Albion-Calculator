@@ -522,29 +522,29 @@
         let difcalc = 0;
 console.log("o2rate",o2rate);
         if (o2transfer === "airfine1") {
-          if ( o2rate = 0.15) {
+          if ( o2rate == 0.15) {
             difcalc = 7.5;
-          } else if (o2rate = 0.2) {
+          } else if (o2rate == 0.2) {
             difcalc = 6.25;
-          } else if (o2rate = 0.3) {
+          } else if (o2rate == 0.3) {
             difcalc = 5.5;
           }  else {
-            o2rate = " Something Wrong try again";
+            difcalc == " Something Wrong try again";
           }
           // document.getElementById("o2rate").value = o2rate;
         } else {
-          if (o2rate = 0.195) {
+          if (o2rate == 0.195) {
             difcalc = 12;
-          } else if (o2rate = 0.26) {
+          } else if (o2rate == 0.26) {
             difcalc = 10;
-          } else if (o2rate = 0.325) {
+          } else if (o2rate == 0.325) {
             difcalc = 8.5;
           }  else {
-            o2rate = " Something Wrong try again";
+            difcalc = " Something Wrong try again";
           }
           // document.getElementById("o2rate").value = o2rate;
         }
-
+console.log("o2rate",o2rate);
         //air required for defuser
         const airrequire = calculateairrequire(
           oxygen,

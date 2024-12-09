@@ -562,9 +562,6 @@ console.log("difcalc",difcalc)
         document.getElementById("airrequired").value = airrequire;
 
 
-        //no of difuserf
-        const nodif = calculatenodif(airrequire, difcalc,airreqnh4);
-
         //nh4 load
         const nh4load = calculatenh4Load(nh4, flow);
 
@@ -583,8 +580,12 @@ console.log("difcalc",difcalc)
         );
         document.getElementById("airreqnh4").value = airreqnh4;
 
+//no of difuser
+        const nodif = calculatenodif(airrequire, difcalc);
+
+        
         //air required bdiffuser calculation
-        const airbydiffuser = Math.round(airreqnh4 / difcalc);
+        const airbydiffuser = calculateairbydiffuser(airreqnh4 / difcalc);
 
         //net total air
         const nettotalair = parseFloat(airrequire + airreqnh4).toFixed(2);
@@ -594,7 +595,7 @@ console.log( "oxygen = ",oxygen ,
           alpha , beta, o2rate ,density , percentageofo2 , workingHr);
         
         //net diffuser
-        const netdiffuser = parseFloat(nodif + airbydiffuser).toFixed(2);
+        const netdiffuser =nodif + airbydiffuser;
         document.getElementById("netdiffuser").value = netdiffuser;
       }
 
@@ -668,8 +669,12 @@ console.log( "oxygen = ",oxygen ,
         );
       }
 
-      function calculatenodif(airrequire, difcalc,airreqnh4) {
-        return parseFloat((airrequire / difcalc)+(airreqnh4/difcalc)).toFixed(2);
+      function calculatenodif(airrequire, difcalc) {
+        return parseFloat(airrequire / difcalc).toFixed(2);
+      }
+
+      function calculateairbydiffuser(airreqnh4 / difcalc){
+      return parseFloat(airreqnh4/difcalc).toFixed(2);
       }
 
       function calculatenh4Load(nh4, flow) {

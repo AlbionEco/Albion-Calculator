@@ -584,8 +584,8 @@
         const nettotalair = parseFloat(airrequire + airreqnh4).toFixed(2);
         document.getElementById("nettotalair").value = nettotalair;
 
-console.log( "oxygen = ",oxygen /
-          (alpha * beta * o2rate * density * percentageofo2 * workingHr));
+console.log( "oxygen = ",oxygen ,
+          alpha , beta, o2rate ,density , percentageofo2 , workingHr);
         
         //net diffuser
         const netdiffuser = parseFloat(nodif + airbydiffuser).toFixed(2);

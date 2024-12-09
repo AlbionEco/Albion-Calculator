@@ -669,7 +669,7 @@ console.log( "oxygen = ",oxygen ,
       }
 
       function calculatenodif(airrequire, difcalc) {
-        return parseFloat(airrequire / difcalc).toFixed(2);
+        return parseFloat((airrequire / difcalc)+(airreqnh4/difcalc)).toFixed(2);
       }
 
       function calculatenh4Load(nh4, flow) {

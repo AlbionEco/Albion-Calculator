@@ -585,7 +585,7 @@ console.log("difcalc",difcalc)
 
         
         //air required bdiffuser calculation
-        const airbydiffuser = calculateairbydiffuser(airreqnh4 / difcalc);
+        const airbydiffuser = calculateairbydiffuser(airreqnh4 , difcalc);
 
         //net total air
         const nettotalair = parseFloat(airrequire + airreqnh4).toFixed(2);
@@ -673,7 +673,7 @@ console.log( "oxygen = ",oxygen ,
         return parseFloat(airrequire / difcalc).toFixed(2);
       }
 
-      function calculateairbydiffuser(airreqnh4 / difcalc){
+      function calculateairbydiffuser(airreqnh4 ,difcalc){
       return parseFloat(airreqnh4/difcalc).toFixed(2);
       }
 

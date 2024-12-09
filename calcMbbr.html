@@ -489,7 +489,9 @@
 
         ///o2 rate
         const o2transfer = document.getElementById("o2transfer").value;
+        console.log("o2transfer",o2transfer);
         const air = document.getElementById("air").value;
+        consol.log("air",air);
         if (o2transfer === "airfine1") {
           if (air === "3SWD") {
             o2rate = 0.15;
@@ -518,7 +520,7 @@
           // document.getElementById("o2rate").value = o2rate;
         }
         let difcalc = 0;
-
+console.log("o2rate",o2rate);
         if (o2transfer === "airfine1") {
           if ( o2rate = 0.15) {
             difcalc = 7.5;

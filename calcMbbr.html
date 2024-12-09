@@ -563,7 +563,7 @@ console.log("difcalc",difcalc)
 
 
         //no of difuserf
-        const nodif = calculatenodif(airrequire, difcalc);
+        const nodif = calculatenodif(airrequire, difcalc,airreqnh4);
 
         //nh4 load
         const nh4load = calculatenh4Load(nh4, flow);
@@ -668,7 +668,7 @@ console.log( "oxygen = ",oxygen ,
         );
       }
 
-      function calculatenodif(airrequire, difcalc) {
+      function calculatenodif(airrequire, difcalc,airreqnh4) {
         return parseFloat((airrequire / difcalc)+(airreqnh4/difcalc)).toFixed(2);
       }
 

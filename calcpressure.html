@@ -102,7 +102,7 @@
               />
             </div>
             <div class="fields">
-              <label>Input Pipe of Length (mm)</label>
+              <label>Input Length of Pipe (meter)</label>
               <input
               type="text"
               id="PipeLength"
@@ -333,8 +333,8 @@ if(LegSupport == 100){
 }
 
 const PipeQty = document.getElementById("PipeQty").value;
-const PipeLength = document.getElementById("PipeLength").value;
-
+let PipeLength = document.getElementById("PipeLength").value;
+PipeLength = PipeLength*1000;
 const rawlegSupportWeight =( legSupportValue * PipeLength) /1000;
 
 
@@ -387,7 +387,8 @@ const EllipticalHead = (1.084 * (ReqVesselDia * ReqVesselDia)) * 2;
 console.log("EllipticalHead",EllipticalHead);
 
 
-const TotalVesselInternalSurface = ShellSurfaceArea+EllipticalHead
+const TotalVesselInternalSurface = ShellSurfaceArea + EllipticalHead
+console.log("TotalVesselInternalSurface",TotalVesselInternalSurface);
 document.getElementById("TotalVesselInternalSurface").value=parseFloat(TotalVesselInternalSurface/1000000).toFixed(2);
 
 document.getElementById("TotalFRPSurface").value = parseFloat(TotalVesselInternalSurface/1000000).toFixed(2);

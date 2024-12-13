@@ -102,7 +102,7 @@
               />
             </div>
             <div class="fields">
-              <label>Input Pipe of Length (meter)</label>
+              <label>Input Pipe of Length (mm)</label>
               <input
               type="text"
               id="PipeLength"
@@ -120,7 +120,7 @@
             />
             </div>
             <div class="fields">
-              <label>Select Leg Support (meter)</label>
+              <label>Select Leg Support (mm)</label>
              <select name="LegSupport" id=LegSupport>
               <option value="100">100mm / 4"</option>
               <option value="150">150mm / 6"</option>
@@ -392,9 +392,9 @@ console.log("EllipticalHead",EllipticalHead);
 
 
 const TotalVesselInternalSurface = ShellSurfaceArea+EllipticalHead
-document.getElementById("TotalVesselInternalSurface").value=parseFloat(TotalVesselInternalSurface).toFixed(2);
+document.getElementById("TotalVesselInternalSurface").value=parseFloat(TotalVesselInternalSurface/1000000).toFixed(2);
 
-document.getElementById("TotalFRPSurface").value = parseFloat(TotalVesselInternalSurface).toFixed(2);
+document.getElementById("TotalFRPSurface").value = parseFloat(TotalVesselInternalSurface/1000000).toFixed(2);
 
 
 // ----------------------TotalVesselInternalSurface   end

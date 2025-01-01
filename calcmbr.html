@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator for MBR</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- fevicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="Albion_Only_Logo-removebg-preview.png"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <div id="nav-placeholder"></div>
+    <script>
+      // Function to load the navbar
+      function loadNavbar() {
+          fetch('navbaralbion.html')
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Network response was not ok ' + response.statusText);
+                  }
+                  return response.text();
+              })
+              .then(data => {
+                  document.getElementById('nav-placeholder').innerHTML = data;
+              })
+              .catch(error => {
+                  console.error('There was a problem with the fetch operation:', error);
+              });
+      }
+      // Load the navbar when the DOM is fully loaded
+      document.addEventListener('DOMContentLoaded', loadNavbar);
+  </script>
+    <!-- navbar End -->
+    <div class="maincontainer">
+      <div id="innercontainer">
+        <!-- ------------Enter container container------- -->
+        <form id="calculation-form">
+          <img
+            src="Albion high - logo.jpg"
+            alt="albion logo "
+            class="innerlogo"
+          />
+          <h3 class="topHeading">Aeration Calculation for MBR</h3>
+          <hr />
+          <div class="fieldcontainer" style="margin-top: 20px">
+            <div class="fields">
+              <label style="font-weight: 600; width: 35%">Project Name </label>
+              <input
+                type="text"
+                id="projname"
+                class="projname"
+                style="margin-left: 10px"
+              />
+            </div>
+            <div class="fields">
+              <label style="font-weight: 600">Project Code</label>
+              <input
+                type="text"
+                id="projcode"
+                class="projcode"
+                style="margin-left: 10px"
+              />
+            </div>
+          </div>
+          <!-- INPUT DATA CONTAINER -->
+          <h2>Input Data</h2>
+          <hr
+            style="
+              height: 3px;
+              border: none;
+              background-color: rgb(130, 219, 129);
+              border-radius: 5px;
+              width: 150px;
+              margin-bottom: 50px;
+              align-self: flex-start;
+            "
+          />
+          <div class="entercontainer">
+            <div class="fields">
+              <label>Flow (KLD)</label>
+              <input type="number" id="flow" class="flow" required />
+            </div>
+            <div class="fieldcontainer">
+              <div class="fields">
+                <label>BODi (Mg/l)</label>
+                <input type="number" id="bodi" class="bodi" required />
+              </div>
+              <div class="fields">
+                <label>BODo (Mg/l)</label>
+                <input type="number" id="bodo" class="bodo" required />
+              </div>
+            </div>
+            <div class="fields">
+              <label>NH<sub>4</sub> (Mg/l)</label>
+              <input type="number" id="nh4" class="nh4" required />
+            </div>
+            <div class="fields">
+              <label>F/M (Metcalf)</label>
+              <input type="text" id="fm" class="fm" required />
+            </div>
+            <div class="fields">
+              <label>MLSS (Metcalf)</label>
+              <select name="mlss" id="mlss">
+                <option value="8000">8000</option>
+                <option value="10000">10000</option>
+                <option value="12000">12000</option>
+              </select>
+            </div>
+            <div class="fields">
+              <label>Membrane Type (Sq mtr)</label>
+              <select id="membraneType" class="membraneType">
+                <option value="6">6</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="12">12</option>
+                <option value="12.5">12.5</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="34.4">34.4</option>
+                <option value="40">40</option>
+              </select>
+            </div>
+            <div class="fields">
+              <label>Flux (LMH)</label>
+              <select name="flux" id="flux">
+                <option value="8">8</option>
+                <option value="10">10</option>
+                <option value="12">12</option>
+                <option value="15">15</option>
+                <option value="18">18</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+              </select>
+            </div>
+            <div class="fields">
+              <label>O2 transfer rate @ </label>
+              <!-- drop down -->
+              <select id="o2transfer">
+                <option value="airfine1">Airfine - 1</option>
+                <option value="airfine3">Airfine - 3</option>
+              </select>
+              <select id="air">
+                <option value="3SWD">3SWD</option>
+                <option value="4SWD">4SWD</option>
+                <option value="5SWD">5SWD</option>
+                <option value="6SWD">6SWD</option>
+              </select>
+            </div>
+            <!-- <div class="fields">
+              <label>Backwash Dosing PPM (PPM)</label>
+              <input
+                type="number"
+                id="backwashDosingPpm"
+                class="backwashDosingPpm"
+                required
+              />
+            </div>
+            <div class="fields">
+              <label>Backwash Time (hr)</label>
+              <input
+                type="number"
+                id="backwashTime"
+                class="backwashTime"
+                required
+              />
+            </div>
+            <div class="fields">
+              <label>Dosing Tank (Liters)</label>
+              <input
+                type="number"
+                id="dosingTank"
+                class="dosingTank"
+                required
+              />
+            </div>
+            <div class="fields">
+              <label>Hypo Dosing (Liters)</label>
+              <input type="text" id="hypoDosing" class="hypoDosing" required />
+            </div> -->
+
+            <!-- SUBMIT BUTTON  -->
+            <button type="submit">Submit</button>
+          </div>
+
+          <!-- ------------Result container------- -->
+
+          <div class="resultcontainer">
+            <h2>Output Data</h2>
+            <hr
+              style="
+                height: 3px;
+                border: none;
+                background-color: rgb(130, 219, 129);
+                border-radius: 5px;
+                width: 150px;
+                margin-bottom: 50px;
+                align-self: flex-start;
+              "
+            />
+            <!-- <div class="fields">
+              <label>MLVSS (kg.m3)</label>
+              <input type="text" id="mlvss" value="" />
+            </div> -->
+            <div class="fields">
+              <label>Volume of Aeration Tank (m<sup>3</sup>)</label>
+              <input type="text" id="volumeOfAerationtank" value="" />
+            </div>
+            <div class="fields">
+              <label>Detention Time (m<sup>3</sup>)</label>
+              <input type="text" id="detentionTime" value="" />
+            </div>
+            <div class="fields">
+              <label>No. of Membrane </label>
+              <input type="text" id="noOfMembrane" value="" />
+            </div>
+            <div class="fields">
+              <label>Total Sq mtr (Sq mtr)</label>
+              <input type="text" id="totalSqMeter" value="" />
+            </div>
+            <div class="fields">
+              <b>
+                <label>Air Required - MBR Membrane (m<sup>3</sup>/hr)</label>
+              </b>
+                <input type="text" id="membraneAir" value="" style="background-color: rgba(209, 255, 209, 0.555);"/>
+            </div>
+            <div class="fields">
+              <label>MBR Permeate Pump Flow (m<sup>3</sup>/hr)</label>
+              <input type="text" id="PermeateFlow" value="" />
+            </div>
+            <div class="fields">
+              <label>MBR B/W Pump Flow (m<sup>3</sup>/hr)</label>
+              <input type="text" id="backwashFlow" value="" />
+            </div>
+            <div class="fields">
+              <label>B/W Tank Volume (Liters)</label>
+              <input type="text" id="backwashtankvolume" value="" />
+            </div>
+            <!-- <div class="fields">
+              <label>Backwash Chemical Req per day(10%) <br />(gm/day)</label>
+              <input type="text" id="BackwashChemicalReqPerday" value="" />
+            </div>
+            <div class="fields">
+              <label>Backwash - 2 Min/cycle (gm/min)</label>
+              <input type="text" id="backwash2min" value="" />
+            </div>-->
+            <div class="fields">
+              <label>MBR RAS Pump Flow (m<sup>3</sup>/hr) </label>
+              <input type="text" id="RASpumpFlow" value="" />
+            </div>
+            <!--<div class="fields">
+              <label>Concentration of Dosing Tank (%) </label>
+              <input type="text" id="concOfDosingTank" value="" />
+            </div>
+            <div class="fields">
+              <label>Net Concentration in Tank <br />(10% Hypo) (%)</label>
+              <input type="text" id="netconcTank" value="" />
+            </div>
+            <div class="fields">
+              <label>Request Capacity of Dosing Pump (LPH)</label>
+              <input
+                type="text"
+                id="reqCapacityOfDosingPump"
+                class="reqCapacityOfDosingPump"
+                value=""
+              />
+            </div>
+            <div class="fields">
+              <label>BOD Load (kg/day)</label>
+              <input type="text" id="bodload" class="bodload" value="" />
+            </div>
+            <div class="fields">
+              <label>Oxygen Required (kg O2/day)</label>
+              <input
+                type="text"
+                id="oxygenRequired"
+                class="oxygenRequired"
+                value=""
+              />
+            </div> -->
+            <div class="fields">
+              <label>Air Required (Aeration)  (m<sup>3</sup>/hr)</label>
+              <input
+                type="text"
+                id="airRequired"
+                class="airRequired"
+                value=""
+              />
+            </div>
+            
+            <!-- <div class="fields">
+              <label>NH4 Load (kg/day)</label>
+              <input type="text" id="nh4load" class="nh4load" value="" />
+            </div>
+            <div class="fields">
+              <label>Oxygen Required for NH4 Removal (kg O2/day)</label>
+              <input
+                type="text"
+                id="oxygenRequiredNh4"
+                class="oxygenRequiredNh4"
+                value=""
+              />
+            </div> -->
+            <div class="fields">
+              <label>Air Required (NH<sub>4</sub>)  (m<sup>3</sup>/hr)</label>
+              <input
+                type="text"
+                id="airRequiredForNh4"
+                class="airRequiredForNh4"
+                value=""
+              />
+            </div>
+            <!-- <div class="fields">
+              <label>Total Air for Aeration (CMH)</label>
+              <input
+                type="text"
+                id="totalAirForAeration"
+                class="totalAirForAeration"
+                value=""
+              />
+            </div> -->
+            <div class="fields">
+              <label>Total Air Required (Aeration + NH<sub>4</sub>)</label>
+              <input
+                type="text"
+                id="totalAirRequired"
+                class="totalAirRequired"
+                value=""
+              />
+            </div>
+            <div class="fields">
+              <label>Total Air Diffusers (Aeration + NH<sub>4</sub>) (NOs.)</label>
+              <input
+                type="text"
+                id="totaldiffuser"
+                class="totaldiffuser"
+                value=""
+              />
+            </div>
+            <!-- PRINT BUTTON  -->
+            <div class="btns">
+              <button id="print-btn" onclick="window.print()">Print</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      
+      // FORM
+      const form = document.getElementById("calculation-form");
+      form.addEventListener("submit", handleSubmit);
+
+      function handleSubmit(event) {
+        event.preventDefault();
+        const flow = document.getElementById("flow").value;
+        const bodi = document.getElementById("bodi").value;
+        const bodo = document.getElementById("bodo").value;
+        const fm = document.getElementById("fm").value;
+        const mlss = document.getElementById("mlss").value;
+        const membraneType = document.getElementById("membraneType").value;
+        const flux = document.getElementById("flux").value;
+        // const backwashDosingPpm = document.getElementById("backwashDosingPpm").value;
+        // const backwashTime = document.getElementById("backwashTime").value;
+        // const dosingTank = document.getElementById("dosingTank").value;
+        // const hypoDosing = document.getElementById("hypoDosing").value;
+        const nh4 = document.getElementById("nh4").value;
+        let o2transferrate = 0;
+        const o2transfer = document.getElementById("o2transfer").value;
+        const air = document.getElementById("air").value;
+        let  difCalculation = 0;
+        if (o2transfer === "airfine1") {
+          if (air === "3SWD") {
+            o2transferrate = 0.15;
+          } else if (air === "4SWD") {
+            o2transferrate = 0.2;
+          } else if (air === "5SWD") {
+            o2transferrate = 0.3;
+          } else if (air === "6SWD") {
+            o2transferrate = 0.36;
+          } else {
+            o2transferrate = " Something Wrong try again";
+          }
+        } else {
+          if (air === "3SWD") {
+            o2transferrate = 0.24;
+          } else if (air === "4SWD") {
+            o2transferrate = 0.32;
+          } else if (air === "5SWD") {
+            o2transferrate = 0.4;
+          } else if (air === "6SWD") {
+            o2transferrate = 0.48;
+          } else {
+            o2transferrate = " Something Wrong try again";
+          }
+        }
+
+        if (o2transfer === "airfine1") {
+          if (o2transferrate == 0.15){
+            difCalculation = 7.5;
+          } else if (o2transferrate == 0.2) {
+            difCalculation = 6.25;
+          } else if (o2transferrate == 0.3) {
+            difCalculation = 5.5;
+          } else {
+            difCalculation = " Something Wrong try again";
+          }
+        } else {
+          if (o2transferrate == 0.24) {
+            difCalculation = 12;
+          } else if (o2transferrate == 0.32) {
+            difCalculation = 10;
+          } else if (o2transferrate == 0.4) {
+            difCalculation = 8.5;
+          } else {
+            o2transferrate = " Something Wrong try again";
+          }
+        }
+
+
+        const bodI = bodi / 1000;
+        const workingHr = 24;
+        const o2req = 1.2;
+        const o2reqnh4 = 4.6;
+        const alpha = 0.8;
+        const beta = 0.7;
+        const density = 1.2;
+        const percentageofo2 = 0.215;
+        const diflength = 1;
+        let depth = o2transferrate;
+
+       
+        document.querySelectorAll(".resultcontainer").forEach((element) => {
+          element.style.display = "block";
+        });
+
+        //mlvss
+        const mlvss = (mlss * (80 / 100)) / 1000;
+        //document.getElementById("mlvss").value = mlvss;
+
+        //volume Of Aeration tank
+        const volumeOfAerationtank = parseFloat(
+          (flow * bodI) / (fm * mlvss)
+        ).toFixed(2);
+        document.getElementById("volumeOfAerationtank").value =
+          volumeOfAerationtank;
+
+        //detention Time
+        const detentionTime = calculatedetentionTime(
+          volumeOfAerationtank,
+          flow,
+          workingHr
+        );
+        document.getElementById("detentionTime").value = detentionTime;
+
+        //no Of Membrane
+        const noOfMembrane = Math.ceil(
+          (flow * 1000) / (membraneType * flux * 20)
+        );
+        document.getElementById("noOfMembrane").value = noOfMembrane;
+
+        //total Sq Meter
+        const totalSqMeter = noOfMembrane * membraneType;
+        document.getElementById("totalSqMeter").value = totalSqMeter;
+
+        //membrane Air
+        const membraneAir = totalSqMeter * 0.3;
+        document.getElementById("membraneAir").value = membraneAir;
+
+        //Permeate Flow
+        const PermeateFlow = flow / 20;
+        document.getElementById("PermeateFlow").value = PermeateFlow;
+
+        //backwash Flow
+        const backwashFlow = PermeateFlow * 1.5;
+        document.getElementById("backwashFlow").value = backwashFlow;
+
+        //backwash tank Req
+        const backwashtankvolume = ((backwashFlow * 1000) / 60) * 4;
+        document.getElementById("backwashtankvolume").value = backwashtankvolume;
+
+        //Backwash Chemical Req Per day
+        const BackwashChemicalReqPerday = backwashFlow * 100;
+        // document.getElementById("BackwashChemicalReqPerday").value =
+        BackwashChemicalReqPerday;
+
+        //backwash 2 min
+        const backwash2min = BackwashChemicalReqPerday / 25 / 2;
+        //document.getElementById("backwash2min").value = backwash2min;
+
+        //RAS pump Flow
+        const RASpumpFlow = (flow / 24) * 3;
+         document.getElementById("RASpumpFlow").value = RASpumpFlow;
+
+        //conc Of Dosing Tank
+        // const concOfDosingTank = (hypoDosing / dosingTank) * 100;
+        // document.getElementById("concOfDosingTank").value = concOfDosingTank;
+
+        //net conc Tank
+        //const netconcTank = (concOfDosingTank * 10) / 100;
+        //document.getElementById("netconcTank").value = netconcTank;
+
+        //req Capacity Of Dosing Pump
+        // const reqCapacityOfDosingPump =(backwashFlow * backwashDosingPpm * backwashTime * 1000) /(netconcTank * 10000);
+        //document.getElementById("reqCapacityOfDosingPump").value =reqCapacityOfDosingPump;
+
+        //bod load
+        const bodload = (bodi * flow) / 1000;
+        //document.getElementById("bodload").value = bodload;
+
+        //oxygen Required
+        const oxygenRequired = bodload * o2req;
+        //document.getElementById("oxygenRequired").value = oxygenRequired;
+
+        //air Required
+        const airRequired =
+          parseFloat(oxygenRequired /
+          (alpha *
+            beta *
+            o2transferrate *
+            density *
+            percentageofo2 *
+            workingHr)).toFixed(2);
+        document.getElementById("airRequired").value = airRequired;
+
+        //no Of Diffuser for At
+        const noOfDiffuserforAt = Math.round(airRequired / difCalculation);
+
+        //total Air For Aeration
+        const totalAirForAeration = airRequired + membraneAir;
+       // document.getElementById("totalAirForAeration").value =
+          totalAirForAeration;
+
+        //nh4 load
+        const nh4load = (nh4 * flow) / 1000;
+        //document.getElementById("nh4load").value = nh4load;
+
+        //oxygen Required Nh4
+        const oxygenRequiredNh4 = nh4load * o2reqnh4;
+        // document.getElementById("oxygenRequiredNh4").value = oxygenRequiredNh4;
+
+        //air Required For Nh4
+        const airRequiredForNh4 =
+          parseFloat(oxygenRequiredNh4 /
+          (alpha * beta * depth * density * percentageofo2 * workingHr)).toFixed(2);
+        document.getElementById("airRequiredForNh4").value = airRequiredForNh4;
+
+        //total Air Required
+        const totalAirRequired = parseFloat(parseFloat(airRequired) + parseFloat(airRequiredForNh4)).toFixed(2);
+        document.getElementById("totalAirRequired").value = totalAirRequired;
+
+        //total diffuser
+        const noOfdiffuserfornh4Removal = Math.round(airRequiredForNh4 / difCalculation);
+        const totaldiffuser =
+          parseFloat(noOfdiffuserfornh4Removal + noOfDiffuserforAt)
+        .toFixed(0);
+        document.getElementById("totaldiffuser").value = totaldiffuser;
+
+      }
+
+      // detention time calculation
+      function calculatedetentionTime(volumeOfAerationtank, flow, workingHr) {
+        return Math.round((volumeOfAerationtank / flow) * workingHr);
+      }
+    </script>
+    <!-- navbar end -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"></script>
+  </body>
+</html>

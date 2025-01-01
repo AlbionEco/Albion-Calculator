@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- fevicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="Albion_Only_Logo-removebg-preview.png"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <div id="nav-placeholder"></div>
+    <script>
+      // Function to load the navbar
+      function loadNavbar() {
+          fetch('navbaralbion.html')
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Network response was not ok ' + response.statusText);
+                  }
+                  return response.text();
+              })
+              .then(data => {
+                  document.getElementById('nav-placeholder').innerHTML = data;
+              })
+              .catch(error => {
+                  console.error('There was a problem with the fetch operation:', error);
+              });
+      }
+      // Load the navbar when the DOM is fully loaded
+      document.addEventListener('DOMContentLoaded', loadNavbar);
+  </script>
+    <!-- navbar End -->
+    <div class="maincontainer">
+      <div id="innercontainer">
+        <!-- ------------Enter container container------- -->
+        <form id="calculation-form">
+          <img
+            src="Albion high - logo.jpg"
+            alt="albion logo "
+            class="innerlogo"
+          />
+          <h3 class="topHeading">Aeration Calculation for LEVAPORE</h3>
+          <hr />
+          <div class="fieldcontainer" style="margin-top: 20px">
+            <div class="fields">
+              <label style="font-weight: 600; width: 35%">Project Name </label>
+              <input
+                type="text"
+                id="projname"
+                class="projname"
+                style="margin-left: 10px"
+              />
+            </div>
+            <div class="fields">
+              <label style="font-weight: 600">Project Code</label>
+              <input
+                type="text"
+                id="projcode"
+                class="projcode"
+                style="margin-left: 10px"
+              />
+            </div>
+          </div>
+
+          <h2>Input Data</h2>
+          <hr
+            style="
+              height: 3px;
+              border: none;
+              background-color: rgb(130, 219, 129);
+              border-radius: 5px;
+              width: 150px;
+              margin-bottom: 50px;
+              align-self: flex-start;
+            "
+          />
+          <div class="entercontainer">
+            <div class="fields">
+              <label>Flow (m<sup>3</sup>/day)</label>
+              <input type="number" id="flow" class="flow" required />
+            </div>
+            <div class="fields">
+              <label>Working Hours (m<sup>3</sup>/hr)</label>
+              <input type="number" id="hours" class="hr" value="24" required />
+            </div>
+            <div class="fieldcontainer">
+              <div class="fields">
+                <label>CODi (Mg/l)</label>
+                <input type="number" id="codi" class="codi" required />
+              </div>
+              <div class="fields">
+                <label>CODo (Mg/l)</label>
+                <input type="number" id="codo" value="" />
+              </div>
+            </div>
+            <div class="fieldcontainer">
+              <div class="fields">
+                <label>BODi (Mg/l)</label>
+                <input type="number" id="bodi" class="bodi" required />
+              </div>
+              <div class="fields">
+                <label>BODo (Mg/l)</label>
+                <input type="number" id="bodo" class="bodo" required />
+              </div>
+            </div>
+            <div class="fieldcontainer">
+              <div class="fields">
+                <label>TSSi (Mg/l)</label>
+                <input type="number" id="tssi" class="tssi" required />
+              </div>
+              <div class="fields">
+                <label>TSSo (Mg/l)</label>
+                <input type="number" id="tsso" value="" />
+              </div>
+            </div>
+            <div class="fieldcontainer">
+              <div class="fields">
+                <label>NH<sub>4</sub>i (Mg/l)</label>
+                <input type="number" id="nh4" class="nh4" required />
+              </div>
+              <div class="fields">
+                <label>NH<sub>4</sub>o (Mg/l)</label>
+                <input type="number" id="nh4o" class="nh4o" required />
+              </div>
+            </div>
+            <div class="fields">
+              <label>Lv-COD (kg.COD/m<sup>3</sup>.d)</label>
+              <select id="lvCod" class="lvCod">
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
+            </div>
+            <div class="fields">
+              <label>Media Volume (%)</label>
+              <select id="mediaVolume" class="mediaVolume">
+                <option value="0.10">0.10</option>
+                <option value="0.15">0.15</option>
+              </select>
+            </div>
+            <div class="fields">
+              <label>O2 transfer rate @ </label>
+              <!-- drop down -->
+              <select id="o2transfer">
+                <option value="airfine1">Airfine - 1</option>
+                <option value="airfine3">Airfine - 3</option>
+              </select>
+              <select id="air">
+                <option value="3SWD">3SWD</option>
+                <option value="4SWD">4SWD</option>
+                <option value="5SWD">5SWD</option>
+                <option value="6SWD">6SWD</option>
+              </select>
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+            <button type="submit">Submit</button>
+          </div>
+
+          <!-- ------------Result container------- -->
+
+          <div class="resultcontainer">
+            <h2>Output Data</h2>
+            <hr
+              style="
+                height: 3px;
+                border: none;
+                background-color: rgb(130, 219, 129);
+                border-radius: 5px;
+                width: 150px;
+                margin-bottom: 50px;
+                align-self: flex-start;
+              "
+            />
+            <div class="fields">
+              <label>COD Removal (kg/day)</label>
+              <input type="text" id="codoRemoval" value="" />
+            </div>
+
+            <div class="fields">
+              <label>BOD Removal (kg/day)</label>
+              <input type="text" id="bodRemoval" value="" />
+            </div>
+
+            <div class="fields">
+              <label>TSS to be Removed (kg/day)</label>
+              <input type="text" id="tssRemoved" value="" />
+            </div>
+            <div class="fields">
+              <label>IFAS Aeration Tank Volume (m<sup>3</sup>)</label>
+              <input type="text" id="vIFAStank" value="" />
+            </div>
+            <div class="fields">
+              <label>CAS Aeration Tank Volume (m<sup>3</sup>)</label>
+              <input type="text" id="CAStank" value="" />
+            </div>
+            <div class="fields">
+              <label>IFAS Media Qty (m<sup>3</sup>) </label>
+              <input type="text" id="IFASmedia" value="" />
+            </div>
+            <div class="fields">
+              <label>F/M (Metcalf)</label>
+              <input type="text" id="fm" value="" />
+            </div>
+            <div class="fields">
+              <label>MLSS (mg/l)</label>
+              <input type="text" id="mlss" value="5000" />
+            </div>
+            <div class="fields">
+              <label>MLVSS (mg/l)</label>
+              <input type="text" id="mlvss" value="5000" />
+            </div>
+
+            <div class="fields">
+              <label>Detention Time/HRT (Hours)</label>
+              <input type="text" id="detentionTime" value="" />
+            </div>
+            <div class="fields">
+              <label>RAS Flow Rate (m<sup>3</sup>/hr)</label>
+              <input type="text" id="RASflow" value="" />
+            </div>
+            <div class="fields">
+              <label>Sludge produced (kg/day) </label>
+              <input type="text" id="sludge" value="" />
+            </div>
+            <div class="fields">
+              <label>Air Required (m<sup>3</sup>/hr) - for BOD Removal</label>
+              <input type="text" id="airrequired" value="" />
+            </div>
+
+            <div class="fields">
+              <label>Air Required (m<sup>3</sup>/hr) - for NH<sub>4</sub> Removal</label>
+              <input type="text" id="airreqnh4" class="airreqnh4" value="" />
+            </div>
+
+            <div class="fields">
+              <label>Total Air Required</label>
+              <input
+                type="text"
+                id="nettotalair"
+                class="nettotalair"
+                value=""
+              />
+            </div>
+            <div class="fields">
+              <label>Diffuser Qty Required</label>
+              <input
+                type="text"
+                id="netdiffuser"
+                class="netdiffuser"
+                value=""
+              />
+            </div>
+            <!-- PRINT BUTTON -->
+            <div class="btns">
+              <button id="print-btn" onclick="window.print()">Print</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById("calculation-form");
+      form.addEventListener("submit", handleSubmit);
+
+      function handleSubmit(event) {
+        event.preventDefault();
+        const flow = document.getElementById("flow").value;
+        const hours = document.getElementById("hours").value;
+        const codi = document.getElementById("codi").value;
+        const codo = document.getElementById("codo").value;
+        const bodi = document.getElementById("bodi").value;
+        const bodo = document.getElementById("bodo").value;
+        const tssi = document.getElementById("tssi").value;
+        const tsso = document.getElementById("tsso").value;
+        const lvCod = document.getElementById("lvCod").value;
+        const nh4 = document.getElementById("nh4").value;
+        const mediaVolume = document.getElementById("mediaVolume").value;
+        const mlss = document.getElementById("mlss").value;
+
+        let o2rate = 0;
+        const mlvss = (mlss * 80) / 100;
+        const workingHr = 24;
+        const o2req = 1.2;
+        const alpha = 0.8;
+        const beta = 0.7;
+        const density = 1.2;
+        const percentageofo2 = 0.215;
+        let depth = o2rate;
+        const diflength = 1;
+        const o2nh4 = 4.6;
+let difcalc = 0;
+        document.querySelectorAll(".resultcontainer").forEach((element) => {
+          element.style.display = "block";
+        });
+
+        // Codi Total value
+        const codiTotal = calculatecodiTotal(codi, flow);
+
+        // Codo Total value
+        const codoTotal = calculatecodoTotal(flow);
+
+        // Codo Removal value
+        const codoRemoval = calculatecodoRemoval(codiTotal, codoTotal);
+        document.getElementById("codoRemoval").value = codoRemoval;
+
+        // boditotal value
+        const bodiTotal = calculateBodiTotal(flow, bodi);
+
+        // bodototal value
+        const bodoTotal = calculateBodoTotal(flow, bodo);
+
+        // bod Removal value
+        const bodRemoval = calculatebodRemoval(bodiTotal, bodoTotal);
+        document.getElementById("bodRemoval").value = bodRemoval;
+
+        //tssi Total value
+        const tssiTotal = calculatetssiTotal(flow, tssi);
+
+        //tsso Total value
+        const tssoTotal = calculatetssoTotal(flow);
+
+        //tss removed value
+        const tssRemoved = calculatetssRemoved(tssiTotal, tssoTotal);
+        document.getElementById("tssRemoved").value = tssRemoved;
+
+        //volume IFAS tank
+        const vIFAStank = calculatevIFAStank(codiTotal, lvCod);
+        document.getElementById("vIFAStank").value = vIFAStank;
+
+        //CAS tank
+        document.getElementById("CAStank").value = vIFAStank;
+
+        //IFAS media
+        const IFASmedia = calculateIFASmedia(vIFAStank, mediaVolume);
+        document.getElementById("IFASmedia").value = IFASmedia;
+
+        //F/m
+        const fm = calculatefm(bodiTotal, vIFAStank, mlvss);
+        document.getElementById("fm").value = fm;
+
+        //mlss
+        document.getElementById("mlss").value = mlss;
+
+        //mlvss
+        document.getElementById("mlvss").value = mlvss;
+
+        //detention Time
+        const detentionTime = calculatedetentionTime(
+          vIFAStank,
+          flow,
+          workingHr
+        );
+        document.getElementById("detentionTime").value = detentionTime;
+
+        //RAS flow
+        const RASflow = calculateRASflow(hours, flow);
+        document.getElementById("RASflow").value = RASflow;
+
+        //sludge produced
+        const sludge = calculatesludge(codoRemoval, tssRemoved);
+        document.getElementById("sludge").value = sludge;
+
+        //bod load
+        const bodload = bodRemoval;
+
+        //oxygen require
+        const oxygen = calculateoxygen(bodload, o2req);
+
+        ///o2 rate
+        const o2transfer = document.getElementById("o2transfer").value;
+        const air = document.getElementById("air").value;
+        if (o2transfer === "airfine1") {
+          if (air === "3SWD") {
+            o2rate = 0.15;
+          } else if (air === "4SWD") {
+            o2rate = 0.2;
+          } else if (air === "5SWD") {
+            o2rate = 0.3;
+          } else if (air === "6SWD") {
+            o2rate = 0.36;
+          } else {
+            o2rate = " Something Wrong try again";
+          }
+        } else {
+          if (air === "3SWD") {
+            o2rate = 0.195;
+          } else if (air === "4SWD") {
+            o2rate = 0.26;
+          } else if (air === "5SWD") {
+            o2rate = 0.325;
+          } else if (air === "6SWD") {
+            o2rate = 0.39;
+          } else {
+            o2rate = " Something Wrong try again";
+          }
+        }
+
+        //air required for defuser
+        const airrequire = calculateairrequire(
+          oxygen,
+          alpha,
+          beta,
+          o2rate,
+          density,
+          percentageofo2,
+          workingHr
+        );
+        document.getElementById("airrequired").value = airrequire;
+
+        //difcalc
+        if (o2rate === 0.15) {
+          difcalc = 7.5;
+        } else if (o2rate === 0.2) {
+          difcalc = 6.25;
+        } else if (o2rate === 0.3) {
+          difcalc = 5.5;
+        } else if (o2rate === 0.195) {
+          difcalc = 12;
+        } else if (o2rate === 0.26) {
+          difcalc = 10;
+        } else if (o2rate === 0.325) {
+          difcalc = 8.5;
+        }
+       
+
+        //no of difuserf
+        const nodif = calculatenodif(airrequire, difcalc);
+
+        //nh4 load
+        const nh4load = calculatenh4Load(nh4, flow);
+
+        //oxygen required nh4
+        const oxygennh4 = parseFloat(nh4load * o2nh4).toFixed(2);
+
+        //air required
+        const airreqnh4 = calculateairreqnh4(
+          oxygennh4,
+          alpha,
+          beta,
+          o2rate,
+          density,
+          percentageofo2,
+          workingHr
+        );
+        document.getElementById("airreqnh4").value = airreqnh4;
+
+        //air required bdiffuser calculation
+        const airbydiffuser = Math.round(airreqnh4 / difcalc);
+
+        //net total air
+        const nettotalair = Number(airrequire)  + Number(airreqnh4);
+        document.getElementById("nettotalair").value = parseFloat(nettotalair).toFixed(2);
+console.log(airrequire,airreqnh4,nettotalair);
+
+
+        //net diffuser
+        const netdiffuser = Math.round(nodif + airbydiffuser);
+        document.getElementById("netdiffuser").value = netdiffuser;
+      }
+      function calculatecodiTotal(flow, codi) {
+        return (flow * codi) / 1000;
+      }
+
+      function calculatecodoTotal(flow) {
+        return (50 * flow) / 1000;
+      }
+
+      function calculatecodoRemoval(codiTotal, codoTotal) {
+        return codiTotal - codoTotal;
+      }
+
+      function calculateBodiTotal(flow, bodi) {
+        return (bodi * flow) / 1000;
+      }
+      function calculateBodoTotal(flow, bodo) {
+        return (bodo * flow) / 1000;
+      }
+
+      function calculatebodRemoval(bodiTotal, bodoTotal) {
+        return bodiTotal - bodoTotal;
+      }
+
+      function calculatetssiTotal(flow, tssi) {
+        return (flow * tssi) / 1000;
+      }
+
+      function calculatetssoTotal(flow) {
+        return (flow * 5) / 1000;
+      }
+
+      function calculatetssRemoved(tssiTotal, tssoTotal) {
+        return tssiTotal - tssoTotal;
+      }
+
+      function calculatevIFAStank(codiTotal, lvCod) {
+        return parseFloat((codiTotal / lvCod).toFixed(2));
+      }
+
+      function calculateIFASmedia(vIFAStank, mediaVolume) {
+        return parseFloat(vIFAStank * mediaVolume).toFixed(2);
+      }
+
+      function calculatefm(bodiTotal, vIFAStank, mlvss) {
+        return parseFloat(bodiTotal / (2 * vIFAStank * (mlvss / 1000))).toFixed(2);
+      }
+
+      function calculatedetentionTime(vIFAStank, flow, workingHr) {
+        return parseFloat((vIFAStank / flow) * workingHr).toFixed(2);
+      }
+
+      function calculateRASflow(hours, flow) {
+        return parseFloat((flow / hours) * 0.6).toFixed(1);
+      }
+
+      function calculatesludge(codoRemoval, tssRemoved) {
+        return parseFloat(0.4 * codoRemoval + 0.48 * tssRemoved).toFixed(1);
+      }
+
+      function calculateoxygen(bodload, o2req) {
+        return parseFloat(bodload * o2req).toFixed(2);
+      }
+
+      function calculateairrequire(
+        oxygen,
+        alpha,
+        beta,
+        o2rate,
+        density,
+        percentageofo2,
+        workingHr
+      ) {
+        return parseFloat(
+          oxygen /
+          (alpha * beta * o2rate * density * percentageofo2 * workingHr)
+        ).toFixed(2);
+      }
+
+      function calculatenodif(airrequire, difcalc) {
+        return Math.round(airrequire / difcalc);
+      }
+
+      function calculatenh4Load(nh4, flow) {
+        return parseFloat((nh4 * flow) / 1000).toFixed(2);
+      }
+
+      function calculateairreqnh4(
+        oxygennh4,
+        alpha,
+        beta,
+        o2rate,
+        density,
+        percentageofo2,
+        workingHr
+      ) {
+        return parseFloat(
+          oxygennh4 /
+          (alpha * beta * o2rate * density * percentageofo2 * workingHr)
+        ).toFixed(2);
+      }
+    </script>
+    <!-- navbar end -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  </body>
+</html>

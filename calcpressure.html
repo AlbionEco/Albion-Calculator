@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator for Filter Pressure</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- fevicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="Albion_Only_Logo-removebg-preview.png"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <div id="nav-placeholder"></div>
+    <script>
+      // Function to load the navbar
+      function loadNavbar() {
+          fetch('navbaralbion.html')
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Network response was not ok ' + response.statusText);
+                  }
+                  return response.text();
+              })
+              .then(data => {
+                  document.getElementById('nav-placeholder').innerHTML = data;
+              })
+              .catch(error => {
+                  console.error('There was a problem with the fetch operation:', error);
+              });
+      }
+      // Load the navbar when the DOM is fully loaded
+      document.addEventListener('DOMContentLoaded', loadNavbar);
+  </script>
+    <!-- navbar End -->
+    <div class="maincontainer">
+      <div id="innercontainer">
+        <!-- ------------Enter container container------- -->
+        <form id="calculation-form">
+          <img
+            src="Albion high - logo.jpg"
+            alt="albion logo "
+            class="innerlogo"
+          />
+          <h3 class="topHeading">Calculation for Filter Pressure</h3>
+          <hr />
+          <div class="fieldcontainer" style="margin-top: 20px">
+            <div class="fields">
+              <label style="font-weight: 600; width: 35%">Project Name </label>
+              <input
+                type="text"
+                id="projname"
+                class="projname"
+                style="margin-left: 10px"
+              />
+            </div>
+            <div class="fields">
+              <label style="font-weight: 600">Project Code</label>
+              <input
+                type="text"
+                id="projcode"
+                class="projcode"
+                style="margin-left: 10px"
+              />
+            </div>
+          </div>
+          <!-- INPUT DATA CONTAINER -->
+          <h2>Input Data</h2>
+          <hr
+            style="
+              height: 3px;
+              border: none;
+              background-color: rgb(130, 219, 129);
+              border-radius: 5px;
+              width: 150px;
+              margin-bottom: 50px;
+              align-self: flex-start;
+            "
+          />
+          <div class="entercontainer">
+            <div class="fields">
+              <label>Plant Capacity (KLD)</label>
+              <input
+                type="text"
+                id="PlantCapacity"
+                class="PlantCapacity"
+                required
+              />
+            </div>
+            <div class="fields">
+              <label>Velocity (m<sup>3</sup>-m<sup>2</sup>/hr)</label>
+              <input type="number" id="Velocity" class="Velocity" required />
+            </div>
+            <div class="fields">
+              <label>Contact Time (Min)</label>
+              <input
+                type="text"
+                id="contactTime"
+                class="contactTime"
+                required
+              />
+            </div>
+            <div class="fields">
+              <label>Input Length of Pipe (meter)</label>
+              <input
+              type="text"
+              id="PipeLength"
+              class="PipeLength"
+              required
+            />
+            </div>
+            <div class="fields">
+              <label>Input Pipe Quantity (Nos.)</label>
+              <input
+              type="text"
+              id="PipeQty"
+              class="PipeQty"
+              required
+            />
+            </div>
+            <div class="fields">
+              <label>Select Leg Support (mm)</label>
+             <select name="LegSupport" id=LegSupport>
+              <option value="100">100mm / 4"</option>
+              <option value="150">150mm / 6"</option>
+              <option value="200">200mm / 8"</option>
+             </select>
+            </div>
+            <div class="fields">
+              <label>Vessel MS Sheet Thickness (mm)</label>
+              <select name="Thickness" id="Thickness">
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="8">8</option>
+                <option value="10">10</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+            <!-- SUBMIT BUTTON  -->
+            <button type="submit">Submit</button>
+          </div>
+
+          <!-- ------------Result container------- -->
+
+          <div class="resultcontainer">
+            <h2>Output Data</h2>
+            <hr
+              style="
+                height: 3px;
+                border: none;
+                background-color: rgb(130, 219, 129);
+                border-radius: 5px;
+                width: 150px;
+                margin-bottom: 50px;
+                align-self: flex-start;
+              "
+            />
+            <div class="fields">
+              <label>Flow (m<sup>3</sup>/hr)</label>
+              <input type="text" id="flow" value="" />
+            </div>
+            <div class="fields">
+              <label>Required Vessel Dia (mm)</label>
+              <input type="text" id="ReqVesselDia" value="" />
+            </div>
+            <div class="fields">
+              <label>Required Volume (m<sup>3</sup>)</label>
+              <input type="text" id="ReqVolume" value="" />
+            </div>
+            <div class="fields">
+              <label>Vessel (HOS) Height (mm)</label>
+              <input type="text" id="VesselHOS" value="" />
+            </div>
+            <table id="table">
+              <tr>
+                <th></th>
+                <th>Volume (kg)</th>
+                <th>Density Volume (kg)</th>
+                <th>Density (kg/lit)</th>
+              </tr>
+              <tr>
+                <td class="tdhead">Sand Media Volume</td>
+                <td id="v1"></td>
+                <td id="dv1"></td>
+                <td>1.56</td>
+              </tr>
+              <tr>
+                <td class="tdhead">Activated Carbon Media Volume</td>
+                <td id="v2"></td>
+                <td id="dv2"></td>
+                <td>0.55</td>
+              </tr>
+              <tr>
+                <td class="tdhead">AFM Media Volume</td>
+                <td id="v3"></td>
+                <td id="dv3"></td>
+                <td>1.26</td>
+              </tr>
+            </table>
+            <div class="fields">
+              <label>Vessel Size (mm)</label>
+              <input type="text" id="VesselSize" value="" />
+            </div>
+            <div class="fields">
+              <label>Vessel Total Size (Including Sheet + leg) (mm)</label>
+              <input type="text" id="VesselSizeSheetLeg" value="" />
+            </div>
+            
+            <div class="fields">
+              <label>Vessel Miscellaneous Weight (kg)</label>
+              <input type="text" id="miscellaneousWeight" value="" />
+            </div>
+            
+            <div class="fields">
+              <label>Total Vessel Weight (kg)</label>
+              <input type="text" id="VesselWeight" value="" />
+            </div>
+
+            <div class="fields">
+              <label>Total Vessel Internal Surface (m<sup>2</sup>)</label>
+              <input type="text" id="TotalVesselInternalSurface" value="" />
+            </div>
+            <div class="fields">
+              <label>Total FRP Coating Surface (m<sup>2</sup>)</label>
+              <input type="text" id="TotalFRPSurface" value="" />
+            </div>
+            
+            <!-- PRINT BUTTON  -->
+            <div class="btns">
+              <button id="print-btn" onclick="window.print()">Print</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      
+      // FORM
+      const form = document.getElementById("calculation-form");
+      form.addEventListener("submit", handleSubmit);
+
+      function handleSubmit(event) {
+        event.preventDefault();
+        const PlantCapacity = document.getElementById("PlantCapacity").value;
+        const Velocity = document.getElementById("Velocity").value;
+        const contactTime = document.getElementById("contactTime").value;
+
+        document.querySelectorAll(".resultcontainer").forEach((element) => {
+          element.style.display = "block";
+        });
+
+        const velocity = 0.00000785;
+        const SF = 50;
+        const pi = 3.141592654;
+
+        //flow
+        const flow = PlantCapacity / 20;
+        document.getElementById("flow").value = flow;
+
+        //flow per min
+        const flowPerMin = flow / 60;
+
+        //area
+        const area = flow / Velocity;
+
+        //dia of vessel required
+        const diaOfVesselreq = 2 * Math.pow(area / pi, 0.5);
+
+        //Req Vessel Dia
+        const ReqVesselDia = Math.round(diaOfVesselreq * 1000);
+        document.getElementById("ReqVesselDia").value = ReqVesselDia;
+
+const VesselSize = ReqVesselDia;
+document.getElementById('VesselSize').value = VesselSize;
+
+        //requested volume
+        const ReqVolume = parseFloat(flowPerMin * contactTime * 1.4).toFixed(2);
+        document.getElementById("ReqVolume").value = ReqVolume;
+
+        //height
+        const height = ReqVolume / area;
+
+        //VesselHOS
+        const VesselHOS = height * 1000;
+        document.getElementById("VesselHOS").value = VesselHOS;
+
+        //v1 = volume 1
+        const v1 = parseFloat((ReqVolume * 1000 )* 55 / 100).toFixed(1);
+        document.getElementById("v1").innerHTML = v1;
+
+        //dv1 = densityvolume1
+        const dv1 = parseFloat(v1 * 1.56).toFixed(1);
+        document.getElementById("dv1").innerHTML = dv1;
+
+        //v2
+        const v2 = parseFloat((ReqVolume * 1000) * 50/ 100).toFixed(1);
+        document.getElementById("v2").innerHTML = v2;
+
+        //dv2 = densityvolume1
+        const dv2 = parseFloat(v2 * 0.55).toFixed(1);
+        document.getElementById("dv2").innerHTML = dv2;
+
+        //v3
+        const v3 = parseFloat((ReqVolume * 1000) * 60 / 100).toFixed(1);
+        document.getElementById("v3").innerHTML = v3;
+
+        //dv3 = densityvolume1
+        const dv3 = parseFloat(v3 * 1.26).toFixed(1);
+        document.getElementById("dv3").innerHTML = dv3;
+
+        //thickness
+        const rawThickness= document.getElementById('Thickness').value;
+const Thickness = Number(rawThickness);
+// leg Support
+let legSupportValue = 0;
+const LegSupport = document.getElementById("LegSupport").value;
+if(LegSupport == 100){
+  legSupportValue = 8.37;
+}else if(LegSupport == 150){
+  legSupportValue = 13.83;
+}else if(LegSupport == 200){
+  legSupportValue = 19.97;
+}
+
+const PipeQty = document.getElementById("PipeQty").value;
+let PipeLength = document.getElementById("PipeLength").value;
+PipeLength = PipeLength*1000;
+const rawlegSupportWeight =( legSupportValue * PipeLength) /1000;
+
+
+const TotalLegSupportWeight = rawlegSupportWeight * PipeQty;
+console.log("pipe",TotalLegSupportWeight);
+
+// -------------------------------- shell perameters start
+//shell Circumference
+const rawshellCircumfrance = ReqVesselDia+Thickness
+
+const shellCircumference = Math.round(rawshellCircumfrance*pi);
+
+
+//shell Development Length
+const shellDevLen = Math.ceil(shellCircumference / 5) * 5;
+  
+
+//shell Weight
+const shellWeight = shellDevLen*Thickness*VesselHOS*velocity*1;
+console.log("shellWeight",shellWeight);
+
+
+// -------------------------------- shell perameters end
+// -------------------------------- dishend perameters start
+
+const dishendCrownRadius = 0.9*ReqVesselDia;
+const dishendKunickleRadius = 0.17*ReqVesselDia;
+
+const dishendCircumference = 25/24*(ReqVesselDia+2*Thickness)+2/3*(dishendKunickleRadius+Thickness)+2*SF;
+
+const dishendDevLen = Math.ceil(dishendCircumference/10)*10;
+
+const dishendWeight = pi/4*(dishendDevLen * dishendDevLen) * Thickness * velocity * 2;
+console.log("dishendWeight",dishendWeight);
+
+// -------------------------------- dishend perameters end
+// total weight
+const miscellaneousWeight  =(shellWeight+dishendWeight+TotalLegSupportWeight)*0.1;
+document.getElementById("miscellaneousWeight").value = parseFloat(miscellaneousWeight).toFixed(2);
+
+const VesselWeight =  (shellWeight + dishendWeight+ TotalLegSupportWeight + miscellaneousWeight);
+document.getElementById("VesselWeight").value = parseFloat(VesselWeight).toFixed(2);
+
+// ----------------------TotalVesselInternalSurface   start
+
+const ShellSurfaceArea = pi * ReqVesselDia * VesselHOS;
+console.log("ShellSurfaceArea",ShellSurfaceArea);
+
+const EllipticalHead = (1.084 * (ReqVesselDia * ReqVesselDia)) * 2;
+console.log("EllipticalHead",EllipticalHead);
+
+
+const TotalVesselInternalSurface = ShellSurfaceArea + EllipticalHead
+console.log("TotalVesselInternalSurface",TotalVesselInternalSurface);
+document.getElementById("TotalVesselInternalSurface").value=parseFloat(TotalVesselInternalSurface/1000000).toFixed(2);
+
+document.getElementById("TotalFRPSurface").value = parseFloat(TotalVesselInternalSurface/1000000).toFixed(2);
+
+const Ellipseheight = area/(pi*(ReqVesselDia/2));
+console.log("area",area,"pi",pi,"ReqVesselDia",ReqVesselDia);
+
+const VesselSizeSheetLeg = (Ellipseheight*2)+VesselHOS+Number(LegSupport);
+console.log("EllipseHeight",Ellipseheight,"VesselHOS",VesselHOS,"legSupport",LegSupport);
+
+document.getElementById('VesselSizeSheetLeg').value = parseFloat(VesselSizeSheetLeg).toFixed(2);
+// ----------------------TotalVesselInternalSurface   end
+      }
+    
+    </script>
+    <!-- navbar end -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"></script>
+  </body>
+</html>

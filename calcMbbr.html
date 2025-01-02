@@ -600,7 +600,7 @@ console.log(mediavolume);
 
 
         //net diffuser
-        const netdiffuser =parseFloat(nodif + airbydiffuser).toFixed(0);
+        const netdiffuser =parseFloat(Number(nodif)  + Number(airbydiffuser) ).toFixed(0);
         document.getElementById("netdiffuser").value = netdiffuser;
       }
 

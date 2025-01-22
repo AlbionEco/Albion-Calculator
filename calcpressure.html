@@ -109,42 +109,7 @@
                 required
               />
             </div>
-            <div class="fields">
-              <label>Input Length of Pipe (meter)</label>
-              <input
-              type="text"
-              id="PipeLength"
-              class="PipeLength"
-              required
-            />
-            </div>
-            <div class="fields">
-              <label>Input Pipe Quantity (Nos.)</label>
-              <input
-              type="text"
-              id="PipeQty"
-              class="PipeQty"
-              required
-            />
-            </div>
-            <div class="fields">
-              <label>Select Leg Support (mm)</label>
-             <select name="LegSupport" id=LegSupport>
-              <option value="100">100mm / 4"</option>
-              <option value="150">150mm / 6"</option>
-              <option value="200">200mm / 8"</option>
-             </select>
-            </div>
-            <div class="fields">
-              <label>Vessel MS Sheet Thickness (mm)</label>
-              <select name="Thickness" id="Thickness">
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="8">8</option>
-                <option value="10">10</option>
-                <option value="12">12</option>
-              </select>
-            </div>
+          
             <!-- SUBMIT BUTTON  -->
             <button type="submit">Submit</button>
           </div>
@@ -206,33 +171,6 @@
                 <td>1.26</td>
               </tr>
             </table>
-            <div class="fields">
-              <label>Vessel Size (mm)</label>
-              <input type="text" id="VesselSize" value="" />
-            </div>
-            <div class="fields">
-              <label>Vessel Total Size (Including Sheet + leg) (mm)</label>
-              <input type="text" id="VesselSizeSheetLeg" value="" />
-            </div>
-            
-            <div class="fields">
-              <label>Vessel Miscellaneous Weight (kg)</label>
-              <input type="text" id="miscellaneousWeight" value="" />
-            </div>
-            
-            <div class="fields">
-              <label>Total Vessel Weight (kg)</label>
-              <input type="text" id="VesselWeight" value="" />
-            </div>
-
-            <div class="fields">
-              <label>Total Vessel Internal Surface (m<sup>2</sup>)</label>
-              <input type="text" id="TotalVesselInternalSurface" value="" />
-            </div>
-            <div class="fields">
-              <label>Total FRP Coating Surface (m<sup>2</sup>)</label>
-              <input type="text" id="TotalFRPSurface" value="" />
-            </div>
             
             <!-- PRINT BUTTON  -->
             <div class="btns">
@@ -280,8 +218,6 @@
         const ReqVesselDia = Math.round(diaOfVesselreq * 1000);
         document.getElementById("ReqVesselDia").value = ReqVesselDia;
 
-const VesselSize = ReqVesselDia;
-document.getElementById('VesselSize').value = VesselSize;
 
         //requested volume
         const ReqVolume = parseFloat(flowPerMin * contactTime * 1.4).toFixed(2);
@@ -341,66 +277,6 @@ const rawlegSupportWeight =( legSupportValue * PipeLength) /1000;
 const TotalLegSupportWeight = rawlegSupportWeight * PipeQty;
 console.log("pipe",TotalLegSupportWeight);
 
-// -------------------------------- shell perameters start
-//shell Circumference
-const rawshellCircumfrance = ReqVesselDia+Thickness
-
-const shellCircumference = Math.round(rawshellCircumfrance*pi);
-
-
-//shell Development Length
-const shellDevLen = Math.ceil(shellCircumference / 5) * 5;
-  
-
-//shell Weight
-const shellWeight = shellDevLen*Thickness*VesselHOS*velocity*1;
-console.log("shellWeight",shellWeight);
-
-
-// -------------------------------- shell perameters end
-// -------------------------------- dishend perameters start
-
-const dishendCrownRadius = 0.9*ReqVesselDia;
-const dishendKunickleRadius = 0.17*ReqVesselDia;
-
-const dishendCircumference = 25/24*(ReqVesselDia+2*Thickness)+2/3*(dishendKunickleRadius+Thickness)+2*SF;
-
-const dishendDevLen = Math.ceil(dishendCircumference/10)*10;
-
-const dishendWeight = pi/4*(dishendDevLen * dishendDevLen) * Thickness * velocity * 2;
-console.log("dishendWeight",dishendWeight);
-
-// -------------------------------- dishend perameters end
-// total weight
-const miscellaneousWeight  =(shellWeight+dishendWeight+TotalLegSupportWeight)*0.1;
-document.getElementById("miscellaneousWeight").value = parseFloat(miscellaneousWeight).toFixed(2);
-
-const VesselWeight =  (shellWeight + dishendWeight+ TotalLegSupportWeight + miscellaneousWeight);
-document.getElementById("VesselWeight").value = parseFloat(VesselWeight).toFixed(2);
-
-// ----------------------TotalVesselInternalSurface   start
-
-const ShellSurfaceArea = pi * ReqVesselDia * VesselHOS;
-console.log("ShellSurfaceArea",ShellSurfaceArea);
-
-const EllipticalHead = (1.084 * (ReqVesselDia * ReqVesselDia)) * 2;
-console.log("EllipticalHead",EllipticalHead);
-
-
-const TotalVesselInternalSurface = ShellSurfaceArea + EllipticalHead
-console.log("TotalVesselInternalSurface",TotalVesselInternalSurface);
-document.getElementById("TotalVesselInternalSurface").value=parseFloat(TotalVesselInternalSurface/1000000).toFixed(2);
-
-document.getElementById("TotalFRPSurface").value = parseFloat(TotalVesselInternalSurface/1000000).toFixed(2);
-
-const Ellipseheight = area/(pi*(ReqVesselDia/2));
-console.log("area",area,"pi",pi,"ReqVesselDia",ReqVesselDia);
-
-const VesselSizeSheetLeg = (Ellipseheight*2)+VesselHOS+Number(LegSupport);
-console.log("EllipseHeight",Ellipseheight,"VesselHOS",VesselHOS,"legSupport",LegSupport);
-
-document.getElementById('VesselSizeSheetLeg').value = parseFloat(VesselSizeSheetLeg).toFixed(2);
-// ----------------------TotalVesselInternalSurface   end
       }
     
     </script>

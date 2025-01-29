@@ -89,7 +89,7 @@
     background-color: rgb(101, 182, 98);
     border-radius: 5px;
     width: 450px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     align-self: center;
   }
   
@@ -107,7 +107,7 @@
   }
 
   .fields {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -120,8 +120,16 @@ table input{
 width: 110%;
 }
 
-  select {
-    width:35%;
+.fields select{
+  width:35%;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 5px;
+  border: 1px solid rgb(130, 219, 129);
+}
+
+.form-group  select {
+    width:70%;
     padding: 10px;
     font-size: 15px;
     border-radius: 5px;

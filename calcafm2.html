@@ -48,9 +48,9 @@
         </div>
         <div class="form-group">
           <label>Flow Velocity (m/h)</label>
-          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="flowVelocity"
-            class="flowVelocity" required value=10 />
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, ''); validateFlowVelocity(this.value)" onchange="checkFlowVelocity(this.value)" id="flowVelocity" required value="10" /><br>
         </div>
+        <span id="flowVelocityError" style="color: red;"></span>
         <div class="form-group">
           <label>Volumetric Flow Rate: (m<sup>3</sup>/h)</label>
           <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="VolumetricFlowRate"
@@ -136,9 +136,9 @@
         </div>
         <div class="form-group">
           <label>AFM Grade 2 (m) (optional)</label>
-          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="manualAFMGrade2"
-            class="manualAFMGrade2" value=0 />
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, ''); validateAFMGrade2(this.value)" onchange="checkAFMGrade2(this.value)" id="manualAFMGrade2" class="manualAFMGrade2" value=0 />
         </div>
+        <span id="afmGrade2Error" style="color: red;"></span>
         <div class="form-group">
           <label>AFM Grade 1(m) (optional)</label>
           <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="manualAFMGrade1"
@@ -191,6 +191,30 @@
     //     window.location.href = "index.html";
     //   }
 
+    function validateFlowVelocity(value) {
+  const floatValue = parseFloat(value);
+  flowVelocityError.textContent = (floatValue < 5 || floatValue > 30) ? 'Flow velocity must be between 5 and 30 m/h' : '';
+  submitBtn.disabled = (floatValue < 5 || floatValue > 30);
+}
+
+function checkFlowVelocity(value) {
+  const floatValue = parseFloat(value);
+  if (floatValue < 5 || floatValue > 30) {
+    alert('Flow velocity must be between 5 and 30 m/h');
+  }
+}
+
+function validateAFMGrade2(value) {
+  const floatValue = parseFloat(value);
+  afmGrade2Error.textContent = (floatValue < 0 || floatValue > 0.5) ? 'AFM Grade 2 must be between 0 and 0.5 m' : '';
+}
+
+function checkAFMGrade2(value) {
+  const floatValue = parseFloat(value);
+  if (floatValue < 0 || floatValue > 0.5) {
+    alert('AFM Grade 2 must be between 0 and 0.5 m');
+  }
+}
 
     function calculateResults() {
       const project = document.getElementById("project").value;
@@ -494,19 +518,19 @@
 
             //table calculation of AFM -----end
             // right side of the image calculation ---------start
-            const MediaDepthWithinTc = manualAFMGrade3AboveLateral + manualAFMGrade2 + manualAFMGrade1 + manualAFMGrade0;
+            const MediaDepthWithinTc = manualAFMGrade3AboveLateral + manualAFMGrade2 + manualAFMGrade1 + manualAFMGrade0 + manualAnthracite ;
             let MediaExpandedDepthwithinTC;
             if (AFMGrade2 == "AFMng Grade 2" && AFMGrade1 == "AFMng Grade 1") {
-              MediaExpandedDepthwithinTC = (AFMngG2Expand + AFMngG1Expand + AFMsG0Expand) + manualAFMGrade3AboveLateral;
+              MediaExpandedDepthwithinTC = (AFMngG2Expand + AFMngG1Expand + AFMsG0Expand + AnthraciteExpand) + manualAFMGrade3AboveLateral;
             }
             else if (AFMGrade2 == "AFMs Grade 2" && AFMGrade1 == "AFMs Grade 1") {
-              MediaExpandedDepthwithinTC = (AFMsG2Expand + AFMsG1Expand + AFMsG0Expand) + manualAFMGrade3AboveLateral;
+              MediaExpandedDepthwithinTC = (AFMsG2Expand + AFMsG1Expand + AFMsG0Expand + AnthraciteExpand) + manualAFMGrade3AboveLateral;
             }
             else if (AFMGrade2 == "AFMng Grade 2" && AFMGrade1 == "AFMs Grade 1") {
-              MediaExpandedDepthwithinTC = (AFMngG2Expand + AFMsG1Expand + AFMsG0Expand) + manualAFMGrade3AboveLateral;
+              MediaExpandedDepthwithinTC = (AFMngG2Expand + AFMsG1Expand + AFMsG0Expand + AnthraciteExpand) + manualAFMGrade3AboveLateral;
             }
             else if (AFMGrade2 == "AFMs Grade 2" && AFMGrade1 == "AFMng Grade 1") {
-              MediaExpandedDepthwithinTC = (AFMsG2Expand + AFMngG1Expand + AFMsG0Expand) + manualAFMGrade3AboveLateral;
+              MediaExpandedDepthwithinTC = (AFMsG2Expand + AFMngG1Expand + AFMsG0Expand + AnthraciteExpand) + manualAFMGrade3AboveLateral;
             };
             console.log("MediaExpandedDepthwithinTC", MediaExpandedDepthwithinTC);
 
@@ -912,19 +936,19 @@
                 <tr>
 <td>
 <div style="position:relative;text-align:left"> 
-  <div style="
+  <div id="bar" style="
   bottom:0;
   margin-bottom:30px;
   max-width:44.5%;
   margin-left:47px;
   height:180px;
   width:120%;
-  color:white;
+  color:white;                          
   position:absolute;
   z-index:1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;"> 
+  justify-content: flex-start;" > 
     <div style="background-color:#8b8b8b ;height:${manualAnthracite*100}%;"> ${manualAnthracite == 0 ? "" : "Anthracite"} 
     </div> 
     <div style="background-color:#c6e0b4 ;height:${manualAFMGrade0*100}%;"> ${manualAFMGrade0 == 0 ? "" : "AFM Grade 0"} 
@@ -933,7 +957,7 @@
     </div> 
     <div style="background-color:#6b9e48 ; height:${manualAFMGrade2*100}%;">${manualAFMGrade2 == 0 ? "" : "AFM Grade 2"} 
     </div> 
-    <div style="background-color:#375623 ; height:${manualAFMGrade3BelowLateral*100}%;">${manualAFMGrade3BelowLateral == 0 ? "" : "AFM Grade 3"} 
+    <div style="background-color:#375623 ; height:${(manualAFMGrade3BelowLateral + manualAFMGrade3AboveLateral) *100}%;">${manualAFMGrade3BelowLateral == 0 && manualAFMGrade3AboveLateral == 0 ? "" : "AFM Grade 3"} 
     </div> 
   </div> 
   <img src="for extra use (1).png" alt="" style="width:100%;height:100%;position:relative;z-index:2;"> 
@@ -964,11 +988,33 @@
         <td>Freeboard after bed expansion</td>
         <td style="background-color:${colorbg};color:white;">${parseFloat(FreeBoardAfterbedExpansion).toFixed(2)}</td>
       </tr>
+      <tr>
+<td colspan=6 style="color:orange">
+  Freeboard <200mm some media may be lost during backwash.<span style="color:red"> Freeboard <150mm the media layering is incompatable with the filter. Media will be lost during  backwash.</span>
+  </td>
+  </tr>
       </table>
-
   </td>
   </tr>
 `;
+
+const bar = document.querySelector("#bar");
+if (bar) {
+  let barHeight = bar.style.height;
+  if(FreeBoardAfterbedExpansion > 0.2){
+              barHeight="180px";
+              document.getElementById("bar").style.height = barHeight;
+            }else if(FreeBoardAfterbedExpansion > 0.15){
+              barHeight="220px";
+              document.getElementById("bar").style.height = barHeight;
+            }else{
+              barHeight="250px";
+              document.getElementById("bar").style.height = barHeight;
+            }
+} else {
+  console.error("Element with id 'bar' not found");
+}
+
 
   function checkTotalHeight() {
     if(FreeBoardAfterbedExpansion > 0.2){

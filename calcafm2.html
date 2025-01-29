@@ -48,33 +48,33 @@
         </div>
         <div class="form-group">
           <label>Flow Velocity (m/h)</label>
-          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, ''); validateFlowVelocity(this.value)" onchange="checkFlowVelocity(this.value)" id="flowVelocity" required value="10" /><br>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, ''); validateFlowVelocity(this.value)" onchange="checkFlowVelocity(this.value)" id="flowVelocity" required  /><br>
         </div>
         <span id="flowVelocityError" style="color: red;"></span>
         <div class="form-group">
           <label>Volumetric Flow Rate: (m<sup>3</sup>/h)</label>
           <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="VolumetricFlowRate"
-            class="VolumetricFlowRate" required value=30 />
+            class="VolumetricFlowRate" required  />
         </div>
         <div class="form-group">
           <label>No. Filters: (No.)</label>
           <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="NoFilters" class="NoFilters"
-            required value=1 />
+            required  />
         </div>
         <div class="form-group">
           <label>Filter Height (H): (m)</label>
           <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="FilterHeight"
-            class="FilterHeight" required value=2.5 />
+            class="FilterHeight" required />
         </div>
         <div class="form-group">
           <label>Top Collector Height (TC): (m)</label>
           <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="TopCollectorHeight"
-            class="TopCollectorHeight" required value=1.8 />
+            class="TopCollectorHeight" required  />
         </div>
         <div class="form-group">
           <label>Dished End Height (TD): (m)</label>
           <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="DishedEndHeight"
-            class="DishedEndHeight" required value=0.3 />
+            class="DishedEndHeight" required  />
         </div>
 
         <br>
@@ -91,7 +91,7 @@
         <div class="form-group">
           <label>Backwash Velocity: (m/h)</label>
           <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="BackwashVelocity"
-            class="BackwashVelocity" required value=30 />
+            class="BackwashVelocity" required  />
         </div>
 
         <br>
@@ -103,7 +103,7 @@
         </div>
         <br>
         <div class="form-group">
-          <label>AFM Standard Filtration Layer:</label>
+          <label>AFM Standard Filtration Layer</label>
           <select name="afmStandardFilterationLayers" id="afmStandardFilterationLayers">
             <option value="AFM G1" selected>AFM G1</option>
             <option value="AFM G1+Anthracite">AFM G1+Anthracite</option>
@@ -673,6 +673,40 @@ function checkAFMGrade2(value) {
               colorbg = "red";
             }
 
+
+
+            //////   estimated filtration Cycle time ----------- start
+
+            let row = flowVelocity -1 ;
+    let matchValue = afmStandardFilterationLayers;
+    let matchRange = ["AFM G1", "AFM G1+Anthracite", "AFM G1+G0", "AFM G1+G0+Anthracite"];
+
+    const flowVelocities = Array.from({ length: 30 }, (_, i) => i + 1);
+
+    const calculateValues = (base, exponent) => 
+        flowVelocities.map(v => v < 5 ? 0 : base * v ** exponent);
+
+    const AFMG1 = calculateValues(513.44, -1.013);
+    const AFMG1_Anthracite = calculateValues(2114, -1.033);
+    const AFMG1_G0 = calculateValues(341.8, -1.025);
+    const AFMG1_G0_Anthracite = calculateValues(1252.7, -1.011);
+
+    const data = [AFMG1, AFMG1_Anthracite, AFMG1_G0, AFMG1_G0_Anthracite];
+    let Loadingcapacity = data[matchRange.indexOf(matchValue)][row];
+let load = Number(SuspendedSolidsLoading);
+console.log("Suspensed Solids Loading", SuspendedSolidsLoading);
+
+let EstimatedFiltrationCycleTime =parseFloat((Loadingcapacity/load)*4).toFixed(2);
+
+
+    console.log('AFM G1:', AFMG1);
+    console.log('AFM G1+Anthracite:', AFMG1_Anthracite);
+    console.log('AFM G1+G0:', AFMG1_G0);
+    console.log('AFM G1+G0+Anthracite:', AFMG1_G0_Anthracite);
+    console.log('EstimatedFiltrationCycleTime:', EstimatedFiltrationCycleTime);
+
+
+            //estimated filtration cycle time ---------- end
             //result table
             const resultsTable = document.getElementById('resultsTable');
             resultsTable.innerHTML = `
@@ -714,7 +748,7 @@ function checkAFMGrade2(value) {
             </tr>
             <tr>
               <td>Total Filtration Area Required</td>
-              <td>${TotalFilterationAreaRequired}</td>
+              <td>${parseFloat(TotalFilterationAreaRequired).toFixed(2)}</td>
               <td>m&sup2</td>
             </tr>
             <tr>
@@ -724,7 +758,7 @@ function checkAFMGrade2(value) {
             </tr>
             <tr>
               <td>Filtration Area per Filter</td>
-              <td>${FiltrationAreaPerFilter}</td>
+              <td>${parseFloat(FiltrationAreaPerFilter).toFixed(2)}</td>
               <td>m&sup2</td>
             </tr>
             <tr>
@@ -771,7 +805,7 @@ function checkAFMGrade2(value) {
             </tr>
             <tr>
               <td>Backwash Flow Rate</td>
-              <td>${BackwashFlowRate}</td>
+              <td>${parseFloat(BackwashFlowRate).toFixed(2)}</td>
               <td>m&sup3/h</td>
             </tr>
             <tr>
@@ -802,7 +836,11 @@ function checkAFMGrade2(value) {
               <td>${flowVelocity}</td>
               <td>m/h</td>
             </tr>
-           
+           <tr>
+              <td>Estimated Filtration Cycle Time</td>
+              <td>${EstimatedFiltrationCycleTime}</td>
+              <td>Hours</td>
+            </tr>
               </table>
   </td>
               </tr>
@@ -891,15 +929,15 @@ function checkAFMGrade2(value) {
                         <td>${parseFloat(Q24).toFixed(1)}</td>
                       </tr>
                       <tr class="bold">
-                        <td>AFM total:</td>
+                        <td>AFM total</td>
                         <td>${parseFloat(AFMTotalM3).toFixed(2)}</td>
                         <td>m&sup3</td>
                         <td></td>
                         <td></td>
                         <td></td>
                       </tr>
-                       <tr>
-                        <td>AFM total:</td>
+                       <tr class="bold">
+                        <td>AFM total</td>
                         <td>${parseFloat(AFMTotalMt).toFixed(2)}</td>
                         <td>mt</td>
                         <td></td>
@@ -998,6 +1036,9 @@ function checkAFMGrade2(value) {
   </tr>
 `;
 
+
+
+// bar calculation  ---------------------------------  start
 const bar = document.querySelector("#bar");
 if (bar) {
   let barHeight = bar.style.height;
@@ -1014,7 +1055,9 @@ if (bar) {
 } else {
   console.error("Element with id 'bar' not found");
 }
+/// bar calculation  ---------------------------------  end
 
+//max limit pop up ---------------------------------  start
 
   function checkTotalHeight() {
     if(FreeBoardAfterbedExpansion > 0.2){
@@ -1025,7 +1068,7 @@ if (bar) {
             }
   }
   checkTotalHeight();
-
+//max limit pop up ---------------------------------  end
             document.getElementById("FixAFMGrade3BelowLateral").innerHTML = FixAFMGrade3BelowLateral;
             document.getElementById("FixAFMGrade3AboveLateral").innerHTML = parseFloat(FixAFMGrade3AboveLateral).toFixed(2);
             document.getElementById("fixAFMGrade2").innerHTML = parseFloat(fixAFMGrade2).toFixed(2);
@@ -1068,7 +1111,6 @@ if (bar) {
               AFMngG1P = window['AFMngG1P']; //target 2
               AFMsG1P = window['AFMsG1P']; //target 3
               AFMsG0P = window['AFMsG0P']; //target 4
-              //console.log(`${targetVariable}----------------------------------------`, window[targetVariable]);
               return resolve();
             } else {
               return resolve(null);

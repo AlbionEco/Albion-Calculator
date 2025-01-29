@@ -334,6 +334,7 @@ const PipeQty = document.getElementById("PipeQty").value;
 let PipeLength = document.getElementById("PipeLength").value;
 PipeLength = PipeLength*1000;
 const rawlegSupportWeight =( legSupportValue * PipeLength) /1000;
+console.log("rawlegSupportWeight",rawlegSupportWeight);
 
 
 const TotalLegSupportWeight = rawlegSupportWeight * PipeQty;
@@ -372,6 +373,9 @@ console.log("dishendWeight",dishendWeight);
 // total weight
 const miscellaneousWeight  =(shellWeight+dishendWeight+TotalLegSupportWeight)*0.1;
 document.getElementById("miscellaneousWeight").value = parseFloat(miscellaneousWeight).toFixed(2);
+console.log("TotalLegSupportWeight",TotalLegSupportWeight);
+
+
 
 const VesselWeight =  (shellWeight + dishendWeight+ TotalLegSupportWeight + miscellaneousWeight);
 document.getElementById("VesselWeight").value = parseFloat(VesselWeight).toFixed(2);

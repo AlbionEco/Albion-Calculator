@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator for MBR</title>
+  <link rel="stylesheet" href="afm.css" />
+   <!-- favicon -->
+  <link rel="icon" type="image/png" href="Albion_Only_Logo-removebg-preview.png" />
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <div id="nav-placeholder"></div>
+  <script>
+    // Function to load the navbar
+    function loadNavbar() {
+      fetch('navbaralbion.html')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.text();
+        })
+        .then(data => {
+          document.getElementById('nav-placeholder').innerHTML = data;
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+    // Load the navbar when the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', loadNavbar);
+  </script>
+  <!-- navbar End -->
+
+  <div class="maincontainer">
+    <div id="innercontainer">
+      <h3 class="topHeading">AFM calculation under review do not use </h3>
+
+      <!-- ------------Enter container container------- -->
+      <form id="projectionForm">
+        <div><b>Filterartion</b></div><br>
+        <div class="form-group">
+          <label>Project Name</label>
+          <input type="text" id="project" class="project" required vlaue="hello" />
+        </div>
+        <div class="form-group">
+          <label>Flow Velocity (m/h)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="flowVelocity"
+            class="flowVelocity" required value=10 />
+        </div>
+        <div class="form-group">
+          <label>Volumetric Flow Rate: (m<sup>3</sup>/h)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="VolumetricFlowRate"
+            class="VolumetricFlowRate" required value=30 />
+        </div>
+        <div class="form-group">
+          <label>No. Filters: (No.)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="NoFilters" class="NoFilters"
+            required value=1 />
+        </div>
+        <div class="form-group">
+          <label>Filter Height (H): (m)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="FilterHeight"
+            class="FilterHeight" required value=2.5 />
+        </div>
+        <div class="form-group">
+          <label>Top Collector Height (TC): (m)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="TopCollectorHeight"
+            class="TopCollectorHeight" required value=1.8 />
+        </div>
+        <div class="form-group">
+          <label>Dished End Height (TD): (m)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="DishedEndHeight"
+            class="DishedEndHeight" required value=0.3 />
+        </div>
+
+        <br>
+        <div><b>Backwash</b></div><br>
+        <div class="form-group">
+          <label>Backwash Temperature: (&#8451)</label>
+          <select id="BackwashTemperature" class="BackwashTemperature" name="BackwashTemperature">
+            <option value=10>10</option>
+            <option value=20>20</option>
+            <option value=30>30</option>
+          </select>
+
+        </div>
+        <div class="form-group">
+          <label>Backwash Velocity: (m/h)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="BackwashVelocity"
+            class="BackwashVelocity" required value=30 />
+        </div>
+
+        <br>
+        <div><b>Filtration Cycle</b></div><br>
+        <div class="form-group">
+          <label>Suspended Solids Loading: (TSS mg/l)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="SuspendedSolidsLoading"
+            class="SuspendedSolidsLoading" required />
+        </div>
+        <br>
+        <div class="form-group">
+          <label>AFM Standard Filtration Layer:</label>
+          <select name="afmStandardFilterationLayers" id="afmStandardFilterationLayers">
+            <option value="AFM G1" selected>AFM G1</option>
+            <option value="AFM G1+Anthracite">AFM G1+Anthracite</option>
+            <option value="AFM G1+G0">AFM G1+G0</option>
+            <option value="AFM G1+G0+Anthracite">AFM G1+G0+Anthracite</option>
+          </select>
+        </div>
+        <div class="fields">
+          <label>AFM Grade 2:</label>
+          <select name="AFMGrade2" id="AFMGrade2">
+            <option value="AFMng Grade 2" selected>AFMng Grade 2</option>
+            <option value="AFMs Grade 2">AFMs Grade 2</option>
+          </select>
+          <select name="AFMGrade1" id="AFMGrade1">
+            <option value="AFMng Grade 1" selected>AFMng Grade 1</option>
+            <option value="AFMs Grade 1">AFMs Grade 1</option>
+          </select>
+        </div>
+        <br>
+        <div><b> Manual Input</b></div><br>
+        <div class="form-group">
+          <label>AFM Grade 3 Below Lateral (m) (optional)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="manualAFMGrade3BelowLateral"
+            class="manualAFMGrade3BelowLateral" value=0 />
+        </div>
+        <div class="form-group">
+          <label>AFM Grade 3 Above Lateral (m) (optional)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="manualAFMGrade3AboveLateral"
+            class="manualAFMGrade3AboveLateral" value=0 />
+        </div>
+        <div class="form-group">
+          <label>AFM Grade 2 (m) (optional)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="manualAFMGrade2"
+            class="manualAFMGrade2" value=0 />
+        </div>
+        <div class="form-group">
+          <label>AFM Grade 1(m) (optional)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="manualAFMGrade1"
+            class="manualAFMGrade1" value=0 />
+        </div>
+        <div class="form-group">
+          <label>AFM Grade 0 (m) (optional)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="manualAFMGrade0"
+            class="manualAFMGrade0" value=0 />
+        </div>
+        <div class="form-group">
+          <label>Anthracite (m) (optional)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="manualAnthracite"
+            class="manualAnthracite" value=0 />
+        </div>
+
+
+        <!-- SUBMIT BUTTON  -->
+        <button type="button" onclick="calculateResults()" style="margin-bottom:40px;">Submit</button>
+    </div>
+    <!-- ------------Result container------- -->
+    <table>
+      <tbody id="resultsTable">
+        <!-- Dynamic rows will be added here -->
+      </tbody>
+    </table>
+     <!-- PRINT BUTTON -->
+     <div class="btns">
+      <button id="print-btn" onclick="window.print()" style="margin-top:40px; margin:40px 40% 0px 40%">Print
+        Table</button>
+    </div>
+  </div>
+  </form>
+  </div>
+  </div>
+
+  <script>
+    //onwindow load
+    //  window.onload = function () {
+    // const cookieName = "token";
+    // if (document.cookie.indexOf(cookieName + "=") === -1) {
+    // Cookie does not exist, redirect to login page or display error message
+    //       window.location.href = "index.html";
+    //       return;
+    //     }
+    //   };
+    //   function handleLogOut() {
+    //     document.cookie = "token=" + ";max-age=1;path=/";
+    //     console.log("cookie cleared");
+    //     window.location.href = "index.html";
+    //   }
+
+
+    function calculateResults() {
+      const project = document.getElementById("project").value;
+
+      const flowVelocity = document.getElementById("flowVelocity").value;
+      const VolumetricFlowRate = document.getElementById("VolumetricFlowRate").value;
+      const NoFilters = document.getElementById("NoFilters").value;
+      const FilterHeight = document.getElementById("FilterHeight").value;
+      const TopCollectorHeight = document.getElementById("TopCollectorHeight").value;
+      const DishedEndHeight = Number(document.getElementById("DishedEndHeight").value);
+      const BackwashTemperature = document.getElementById("BackwashTemperature").value;
+      const BackwashVelocity = document.getElementById("BackwashVelocity").value;
+      const SuspendedSolidsLoading = document.getElementById("SuspendedSolidsLoading").value;
+      const afmStandardFilterationLayers = document.getElementById("afmStandardFilterationLayers").value;
+      const AFMGrade2 = document.getElementById("AFMGrade2").value;
+      const AFMGrade1 = document.getElementById("AFMGrade1").value;
+
+      let manualAFMGrade3BelowLateral = document.getElementById("manualAFMGrade3BelowLateral").value;
+      let manualAFMGrade3AboveLateral = document.getElementById("manualAFMGrade3AboveLateral").value;
+      let manualAFMGrade2 = document.getElementById("manualAFMGrade2").value;
+      let manualAFMGrade1 = document.getElementById("manualAFMGrade1").value;
+      let manualAFMGrade0 = document.getElementById("manualAFMGrade0").value;
+      let manualAnthracite = document.getElementById("manualAnthracite").value;
+
+      manualAFMGrade3BelowLateral = Number(manualAFMGrade3BelowLateral);
+      manualAFMGrade3AboveLateral = Number(manualAFMGrade3AboveLateral);
+      manualAFMGrade2 = Number(manualAFMGrade2);
+      manualAFMGrade1 = Number(manualAFMGrade1);
+      manualAFMGrade0 = Number(manualAFMGrade0);
+      manualAnthracite = Number(manualAnthracite);
+
+      const TotalFilterationAreaRequired = VolumetricFlowRate / flowVelocity;
+      const FiltrationAreaPerFilter = TotalFilterationAreaRequired / NoFilters;
+      const FilterDiameter = Math.sqrt(FiltrationAreaPerFilter * 4 / (3.1416));
+
+      //AFM Standard Layering  sheet        -------- start
+
+      //side calculation Individual Layer  ----- start
+
+      // Assuming you have fetched the data from the JSON file using the Fetch API
+      fetch('backwashafm.json')
+        .then(response => response.json())
+        .then(data => {
+
+          const value = BackwashTemperature;
+          const backwashVelocity = BackwashVelocity;
+          const targetKey1 = "AFMng Grade 2 - Bed Expansion";
+          const targetKey2 = "AFMng Grade 1(100%)";
+          const targetKey3 = "AFMs Grade 1(100%)";
+          const targetKey4 = "AFMng Grade 1(70%) + AFMng Grade 2(30%)";
+          const targetKey5 = "AFMng Grade 0 (100%)";
+
+          console.log("---------------------------------------------------------------data fetching");
+
+          // Implement the logic of the Excel formula
+          Promise.all([
+            calculateValue(data, value, backwashVelocity, targetKey1, 'AFMngG2P'),
+            calculateValue(data, value, backwashVelocity, targetKey2, 'AFMngG1P'),
+            calculateValue(data, value, backwashVelocity, targetKey3, 'AFMsG1P'),
+            calculateValue(data, value, backwashVelocity, targetKey5, 'AFMsG0P')
+          ]).then(() => {
+            console.log("---------------------------------------------------------------data fetched");
+
+
+            const AFMngG2Factor = 1 + (AFMngG2P) / 100;
+            const AFMsG2Factor = 1 + (AFMsG2P / 100);
+            const AFMngG1Factor = 1 + (AFMngG1P / 100);
+            const AFMsG1Factor = 1 + (AFMsG1P / 100);
+            const AFMsG0Factor = 1 + (AFMsG0P / 100);
+            const AnthraciteFactor = 1.5;
+
+            ////////----------------------------------------------------------
+
+
+
+
+
+            //side calculation Individual Layer  ----- end
+
+
+            // standard Filtration height
+            let D21 = DishedEndHeight;
+            let E21 = 0;
+            let F21;
+            if (AFMGrade2 == "AFMng Grade 2") {
+              F21 = 0.4 * (TopCollectorHeight - 0.2) / AFMngG2Factor;
+            } else {
+              F21 = 0.4 * (TopCollectorHeight - 0.2) / AFMsG2Factor;
+            }
+            let G21 = 0;
+            if (AFMGrade1 == "AFMng Grade 1") {
+              G21 = 0.65 * (TopCollectorHeight - 0.2) / AFMngG1Factor;
+            } else {
+              G21 = 0.65 * (TopCollectorHeight - 0.2) / AFMsG1Factor;
+            }
+            let H21 = 0;
+            let I21 = 0;
+            let D22 = DishedEndHeight;
+            let E22 = 0;
+            let F22 = 0;
+            if (AFMGrade2 == "AFMng Grade 2") {
+              F22 = 0.3 * (TopCollectorHeight - 0.4) / AFMngG2Factor;
+            } else {
+              F22 = 0.3 * (TopCollectorHeight - 0.4) / AFMsG2Factor;
+            }
+            let G22 = 0;
+            if (AFMGrade1 == "AFMng Grade 1") {
+              G22 = 0.6 * (TopCollectorHeight - 0.4) / AFMngG1Factor;
+            } else {
+              G22 = 0.6 * (TopCollectorHeight - 0.4) / AFMsG1Factor;
+            }
+            let H22 = 0;
+            let I22 = 0;
+            if (TopCollectorHeight < 1.5) {
+              I22 = 0.15;
+            } else {
+              I22 = 0.2;
+            }
+
+            let D23 = DishedEndHeight;
+            let E23 = 0;
+            let F23 = 0;
+            if (AFMGrade2 == "AFMng Grade 2") {
+              F23 = 0.3 * (TopCollectorHeight - 0.2) / AFMngG2Factor;
+            } else {
+              F23 = 0.3 * (TopCollectorHeight - 0.2) / AFMsG2Factor;
+            }
+            let G23 = 0;
+            if (AFMGrade1 == "AFMng Grade 1") {
+              G23 = 0.55 * (TopCollectorHeight - 0.2) / AFMngG1Factor;
+            } else {
+              G23 = 0;
+            }
+            let H23 = 0.25 * (TopCollectorHeight - 0.2) / AFMsG0Factor;
+            let I23 = 0;
+
+            let D24 = DishedEndHeight;
+            let E24 = 0;
+            let F24 = 0;
+            if (AFMGrade2 == "AFMng Grade 2") {
+              F24 = 0.3 * (TopCollectorHeight - 0.4) / AFMngG2Factor;
+            } else {
+              F24 = 0.3 * (TopCollectorHeight - 0.4) / AFMsG2Factor;
+            }
+            let G24 = 0;
+            if (AFMGrade1 == "AFMng Grade 1") {
+              G24 = 0.35 * (TopCollectorHeight - 0.2) / AFMngG1Factor;
+            } else {
+              G24 = 0.35 * (TopCollectorHeight - 0.2) / AFMsG1Factor;
+            }
+            let H24 = 0.25 * (TopCollectorHeight - 0.25) / AFMsG0Factor;
+            let I24 = 0;
+            if (TopCollectorHeight < 1.5) {
+              I24 = 0.15;
+            } else {
+              I24 = 0.2;
+            }
+
+            console.log("---------AFM standard lauering white part---------");
+            console.log("D21", D21);
+            console.log("E21", E21);
+            console.log("F21", F21);
+            console.log("G21", G21);
+            console.log("H21", H21);
+            console.log("I21", I21);
+            console.log("D22", D22);
+            console.log("E22", E22);
+            console.log("F22", F22);
+            console.log("G22", G22);
+            console.log("H22", H22);
+            console.log("I22", I22);
+            console.log("D23", D23);
+            console.log("E23", E23);
+            console.log("F23", F23);
+            console.log("G23", G23);
+            console.log("H23", H23);
+            console.log("I23", I23);
+            console.log("D24", D24);
+            console.log("E24", E24);
+            console.log("F24", F24);
+            console.log("G24", G24);
+            console.log("H24", H24);
+            console.log("I24", I24);
+
+
+
+
+
+            let G3below = 0;
+            let G3above = 0;
+            let G2 = 0;
+            let G1 = 0;
+            let G0 = 0;
+            let Anthracite = 0;
+            if (afmStandardFilterationLayers == "AFM G1") {
+              G3below = parseFloat(D21 / 0.05).toFixed(2) * 0.05;
+              G3above = parseFloat(E21 / 0.05).toFixed(2) * 0.05;
+              G2 = Math.floor(F21 / 0.05).toFixed(0) * 0.05;
+              G1 = Math.floor(G21 / 0.05).toFixed(0) * 0.05;
+              G0 = 0;
+              Anthracite = 0;
+            } else if (afmStandardFilterationLayers == "AFM G1+Anthracite") {
+              G3below = DishedEndHeight;
+              G3above = 0;
+              G2 = Math.floor(F22 / 0.05).toFixed(0) * 0.05;
+              G1 = Math.floor(G22 / 0.05).toFixed(0) * 0.05;
+              G0 = 0;
+              Anthracite = I22;
+            } else if (afmStandardFilterationLayers == "AFM G1+G0") {
+              G3below = DishedEndHeight;
+              G3above = 0;
+              G2 = Math.floor(F23 / 0.05).toFixed(0) * 0.05;
+              G1 = Math.floor(G23 / 0.05).toFixed(0) * 0.05;
+              G0 = Math.floor(H23 / 0.05).toFixed(0) * 0.05;
+              Anthracite = 0;
+            } else if (afmStandardFilterationLayers == "AFM G1+G0+Anthracite") {
+              G3below = DishedEndHeight;
+              G3above = 0;
+              G2 = Math.floor(F24 / 0.05).toFixed(0) * 0.05;
+              G1 = Math.floor(G24 / 0.05).toFixed(0) * 0.05;
+              G0 = Math.floor(H24 / 0.05).toFixed(0) * 0.05;
+              Anthracite = I24;
+            }
+
+
+            console.log("D21", D21);
+            console.log("G3below", G3below);
+            console.log("G3above", G3above);
+            console.log("G2", G2);
+            console.log("G1", G1);
+            console.log("G0", G0);
+            console.log("Anthracite", Anthracite);
+
+
+            //AFM Standard Layering  sheet        -------- start
+
+            //table calculation of AFM -----start
+            const FixAFMGrade3BelowLateral = Number(parseFloat(G3below).toFixed(2));
+            const FixAFMGrade3AboveLateral = Number(parseFloat(G3above).toFixed(2));
+            const fixAFMGrade2 = Number(parseFloat(G2).toFixed(2));
+            const fixAFMGrade1 = Number(parseFloat(G1).toFixed(2));
+            const fixAFMGrade0 = Number(parseFloat(G0).toFixed(2));
+            const fixAnthracite = Number(parseFloat(Anthracite).toFixed(2));
+
+
+
+            if (manualAFMGrade3BelowLateral == 0) {
+              manualAFMGrade3BelowLateral = FixAFMGrade3BelowLateral;
+            }
+            if (manualAFMGrade3AboveLateral == 0) {
+              manualAFMGrade3AboveLateral = FixAFMGrade3AboveLateral;
+            }
+            if (manualAFMGrade2 == 0) {
+              manualAFMGrade2 = fixAFMGrade2;
+            }
+            if (manualAFMGrade1 == 0) {
+              manualAFMGrade1 = fixAFMGrade1;
+            }
+            if (manualAFMGrade0 == 0) {
+              manualAFMGrade0 = fixAFMGrade0;
+            }
+            if (manualAnthracite == 0) {
+              manualAnthracite = fixAnthracite;
+            }
+
+
+
+            let AFMngG2Expand = AFMGrade2 == "AFMng Grade 2" ? manualAFMGrade2 * AFMngG2Factor : 0;
+            let AFMsG2Expand = AFMGrade2 == "AFMs Grade 2" ? manualAFMGrade2 * AFMsG2Factor : 0;
+            let AFMngG1Expand = AFMGrade1 == "AFMng Grade 1" ? manualAFMGrade1 * AFMngG1Factor : 0;
+            let AFMsG1Expand = AFMGrade1 == "AFMs Grade 1" ? manualAFMGrade1 * AFMsG1Factor : 0;
+            let AFMsG0Expand = manualAFMGrade0 * AFMsG0Factor;
+            let AnthraciteExpand = manualAnthracite * AnthraciteFactor
+            console.log("---------side calculation last box----------");
+            AFMngG2Expand = Number(AFMngG2Expand);
+            AFMsG2Expand = Number(AFMsG2Expand);
+            AFMngG1Expand = Number(AFMngG1Expand);
+            AFMsG1Expand = Number(AFMsG1Expand);
+            AFMsG0Expand = Number(AFMsG0Expand);
+            AnthraciteExpand = Number(AnthraciteExpand);
+
+
+
+            console.log("AFMngG2P", AFMngG2P);
+            console.log("AFMngG2Factor", AFMngG2Factor);
+            console.log("AFMngG2Expand", AFMngG2Expand);
+            console.log("AFMsG2P", AFMsG2P);
+            console.log("AFMsG2Factor", AFMsG2Factor);
+            console.log("AFMsG2Expand", AFMsG2Expand);
+            console.log("AFMngG1P", AFMngG1P);
+            console.log("AFMngG1Factor", AFMngG1Factor);
+            console.log("AFMngG1Expand", AFMngG1Expand);
+            console.log("AFMsG1P", AFMsG1P);
+            console.log("AFMsG1Factor", AFMsG1Factor);
+            console.log("AFMsG1Expand", AFMsG1Expand);
+            console.log("AFMsG0P", AFMsG0P);
+            console.log("AFMsG0Factor", AFMsG0Factor);
+            console.log("AFMsG0Expand", AFMsG0Expand);
+            console.log("AnthraciteFactor", AnthraciteFactor);
+            console.log("AnthraciteExpand", AnthraciteExpand);
+
+            //table calculation of AFM -----end
+            // right side of the image calculation ---------start
+            const MediaDepthWithinTc = manualAFMGrade3AboveLateral + manualAFMGrade2 + manualAFMGrade1 + manualAFMGrade0;
+            let MediaExpandedDepthwithinTC;
+            if (AFMGrade2 == "AFMng Grade 2" && AFMGrade1 == "AFMng Grade 1") {
+              MediaExpandedDepthwithinTC = (AFMngG2Expand + AFMngG1Expand + AFMsG0Expand) + manualAFMGrade3AboveLateral;
+            }
+            else if (AFMGrade2 == "AFMs Grade 2" && AFMGrade1 == "AFMs Grade 1") {
+              MediaExpandedDepthwithinTC = (AFMsG2Expand + AFMsG1Expand + AFMsG0Expand) + manualAFMGrade3AboveLateral;
+            }
+            else if (AFMGrade2 == "AFMng Grade 2" && AFMGrade1 == "AFMs Grade 1") {
+              MediaExpandedDepthwithinTC = (AFMngG2Expand + AFMsG1Expand + AFMsG0Expand) + manualAFMGrade3AboveLateral;
+            }
+            else if (AFMGrade2 == "AFMs Grade 2" && AFMGrade1 == "AFMng Grade 1") {
+              MediaExpandedDepthwithinTC = (AFMsG2Expand + AFMngG1Expand + AFMsG0Expand) + manualAFMGrade3AboveLateral;
+            };
+            console.log("MediaExpandedDepthwithinTC", MediaExpandedDepthwithinTC);
+
+
+
+            //  right side of the image calculation ------end
+            let AD22 = manualAFMGrade3AboveLateral + manualAFMGrade2 + manualAFMGrade1 + manualAFMGrade0 + manualAnthracite;
+            let AD23;
+            if (AFMGrade2 == "AFMng Grade 2" && AFMGrade1 == "AFMng Grade 1") {
+              AD23 = (AFMngG2Expand + AFMngG1Expand + AFMsG0Expand + AnthraciteExpand) + manualAFMGrade3AboveLateral;
+            }
+            else if (AFMGrade2 == "AFMs Grade 2" && AFMGrade1 == "AFMs Grade 1") {
+              AD23 = (AFMsG2Expand + AFMsG1Expand + AFMsG0Expand + AnthraciteExpand) + manualAFMGrade3AboveLateral;
+            }
+            else if (AFMGrade2 == "AFMng Grade 2" && AFMGrade1 == "AFMs Grade 1") {
+              AD23 = (AFMngG2Expand + AFMsG1Expand + AFMsG0Expand + AnthraciteExpand) + manualAFMGrade3AboveLateral;
+            }
+            else if (AFMGrade2 == "AFMs Grade 2" && AFMGrade1 == "AFMng Grade 1") {
+              AD23 = (AFMsG2Expand + AFMngG1Expand + AFMsG0Expand + AnthraciteExpand) + manualAFMGrade3AboveLateral;
+            };
+            console.log("AD23", AD23);
+
+
+
+
+            // side calculation for AFM only backwash Filtration bed expansion   -----------   start
+            const FiltrationBedHeightM = +(MediaDepthWithinTc - manualAFMGrade3AboveLateral);
+            const FiltrationBedHeightP = 100;
+            const FiltrationBedHeightatBackwashM = +(MediaExpandedDepthwithinTC - manualAFMGrade3AboveLateral);
+            const FiltrationBedHeightatBackwashP = +(FiltrationBedHeightP * FiltrationBedHeightatBackwashM / FiltrationBedHeightM);
+            const BedExpansionM = +(FiltrationBedHeightatBackwashM - FiltrationBedHeightM);
+            const BedExpansionP = +(FiltrationBedHeightP * BedExpansionM / FiltrationBedHeightM);
+            console.log(" -------  AFM only backwash Filtration bed expansion -----  ");
+            console.log("FiltrationBedHeightM", FiltrationBedHeightM);
+            console.log("FiltrationBedHeightatBackwashM", FiltrationBedHeightatBackwashM);
+            console.log("FiltrationBedHeightatBackwashP", FiltrationBedHeightatBackwashP);
+            console.log("BedExpansionM", BedExpansionM);
+            console.log("BedExpansionP", BedExpansionP);
+
+
+
+
+
+            //side calculation for AFM + Anthr. Backwash filtration bed expansion ---- start
+            const BedHeightFiltrationM = AD22 - manualAFMGrade3AboveLateral;
+            const BedHeightFiltrationP = 100;
+            const BedHeightBackwashM = AD23 - manualAFMGrade3AboveLateral;
+            const BedHeightBackwashP = BedHeightFiltrationP * BedHeightBackwashM / BedHeightFiltrationM;
+            const BedExpansionM2 = BedHeightBackwashM - BedHeightFiltrationM;
+            const BedExpansionP2 = BedHeightFiltrationP * BedExpansionM2 / BedHeightFiltrationM;
+            console.log("---------AFM + Anthr. Backwash filtration bed expansion---------");
+            console.log("BedHeightFiltrationM", BedHeightFiltrationM);
+            console.log("BedHeightBackwashM", BedHeightBackwashM);
+            console.log("BedHeightBackwashP", BedHeightBackwashP);
+            console.log("BedExpansionM2", BedExpansionM2);
+            console.log("BedExpansionP2", BedExpansionP2);
+
+
+
+
+
+            ///side calculation for media Quantities 
+            const pi = Math.PI;
+            const InsideDishDepth = DishedEndHeight;
+            let volumeVolumeGrade3 = ((FilterDiameter ** 3 * DishedEndHeight * (Math.PI / 24)) * (3 * (manualAFMGrade3BelowLateral / InsideDishDepth) ** 2 - (manualAFMGrade3BelowLateral / InsideDishDepth) ** 3) * 1000);
+            let volumeVolumeGrade3All = (FiltrationAreaPerFilter * manualAFMGrade3AboveLateral * 1000) + volumeVolumeGrade3
+            let volumeVolumeGrade2 = FiltrationAreaPerFilter * manualAFMGrade2 * 1000;
+            let volumeVolumeGrade1 = FiltrationAreaPerFilter * manualAFMGrade1 * 1000;
+            let volumeVolumeGrade0 = FiltrationAreaPerFilter * manualAFMGrade0 * 1000;
+            let volumeVolumeAnthracite = FiltrationAreaPerFilter * manualAnthracite * 1000;
+
+            const BulkBedDensity = 1.25;
+            const BulkBedDensityAnthracite = 0.7;
+
+            let MediaWeightGrade3 = volumeVolumeGrade3 * BulkBedDensity;
+            let MediaWeightGrade3All = volumeVolumeGrade3All * BulkBedDensity;
+            let MediaWeightGrade2 = volumeVolumeGrade2 * BulkBedDensity;
+            let MediaWeightGrade1 = volumeVolumeGrade1 * BulkBedDensity;
+            let MediaWeightGrade0 = volumeVolumeGrade0 * BulkBedDensity;
+            let MediaWeightAnthracite = volumeVolumeAnthracite * BulkBedDensityAnthracite;
+
+            console.log("---------media Quantities---------");
+
+
+            console.log("volumeVolumeGrade3", volumeVolumeGrade3);
+            console.log("volumeVolumeGrade3All", volumeVolumeGrade3All);
+            console.log("volumeVolumeGrade2", volumeVolumeGrade2);
+            console.log("volumeVolumeGrade1", volumeVolumeGrade1);
+            console.log("volumeVolumeGrade0", volumeVolumeGrade0);
+            console.log("volumeVolumeAnthracite", volumeVolumeAnthracite);
+            console.log("MediaWeightGrade3", MediaWeightGrade3);
+            console.log("MediaWeightGrade3All", MediaWeightGrade3All);
+            console.log("MediaWeightGrade2", MediaWeightGrade2);
+            console.log("MediaWeightGrade1", MediaWeightGrade1);
+            console.log("MediaWeightGrade0", MediaWeightGrade0);
+            console.log("MediaWeightAnthracite", MediaWeightAnthracite);
+
+
+            // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            // side calculation   -------------   end
+            const FiltrationBedExpansion = (manualAnthracite > 0) ? Math.floor(BedExpansionP2) : Math.floor(BedExpansionP);
+
+
+            const BackwashFlowRate = FiltrationAreaPerFilter * BackwashVelocity;
+
+            const RecommendedInternalPipeDiameter = parseFloat(Math.sqrt((4 * BackwashFlowRate) / (3.14156 * 2 * 3600)) * 1000).toFixed(2);
+
+            const MinimumInternalPipeDiameter = Math.sqrt((4 * BackwashFlowRate) / (3.14156 * 2.5 * 3600)) * 1000;
+
+            //const EstimatedFiltrationCycleTime = 
+
+            const M23 = MediaWeightGrade3All * NoFilters;
+            const N23 = MediaWeightGrade2 * NoFilters;
+            const O23 = MediaWeightGrade1 * NoFilters;
+            const P23 = MediaWeightGrade0 * NoFilters;
+            const Q23 = MediaWeightAnthracite * NoFilters;
+
+            const M24 = Math.round(M23 / 24) * 24 / 25;
+            const N24 = Math.round(N23 / 24) * 24 / 25;
+            const O24 = Math.round(O23 / 24) * 24 / 25;
+            const P24 = Math.round(P23 / 25) * 25 / 25;
+            const Q24 = Math.round(Q23 / 25) * 25 / 25;
+
+            const AFMTotalMt = (M23 + N23 + O23 + P23) / 1000;
+            const AFMTotalM3 = AFMTotalMt / BulkBedDensity;
+
+            const AFMTotakBag = (M24 + N24 + O24 + P24);
+            const AFMFullPalletes = Math.floor((AFMTotakBag / 40), 0);
+            const AFMFullPalletes2 = (AFMTotakBag) - (AFMFullPalletes * 40);
+            const AFMtotalAmountofPalettes = Math.ceil(AFMTotakBag / 40);
+
+            const FreeBoardAfterbedExpansion = TopCollectorHeight-MediaExpandedDepthwithinTC;
+            let colorbg;
+            if(FreeBoardAfterbedExpansion > 0.2){
+              colorbg = "green";
+            }else if(FreeBoardAfterbedExpansion > 0.15){
+              colorbg = "orange";
+            }else{
+              colorbg = "red";
+            }
+
+            //result table
+            const resultsTable = document.getElementById('resultsTable');
+            resultsTable.innerHTML = `
+            <thead  id="resultsTablehead">
+        <tr>
+          <th colspan="3" style="background-color:rgb(210, 245, 215); text-align: left; color:black; font-weight: 400;">
+            <img src="Albion_high_-_logo-removebg-preview.png" alt="" class="logo" style="float: right; margin:10px;">
+            <b>Albion Ecotech Pvt Ltd </b>
+            <br >www.albionecotech.com
+            <br> Project Name :  <span value="" class="bold">${project}</span>
+          </th>
+        </tr>
+        <tr>
+          <th colspan="3">
+            AFM trial
+          </th>
+        </tr>
+        <tr>
+          <th>Parameter</th>
+          <th colspan="2">Value</th>
+        </tr>
+      </thead>
+
+      <tr>
+        <td>
+      <table border= "collapse">
+            <tr class="heading">
+              <td colspan=3 style="text-align:center">Filtration</td>
+            </tr>
+            <tr>
+              <td>Flow Velocity</td>
+              <td>${flowVelocity}</td>
+              <td>m/h</td>
+            </tr>
+            <tr>
+              <td>Volumetric Flow Rate</td>
+              <td>${VolumetricFlowRate}</td>
+              <td>m&sup3/h</td>
+            </tr>
+            <tr>
+              <td>Total Filtration Area Required</td>
+              <td>${TotalFilterationAreaRequired}</td>
+              <td>m&sup2</td>
+            </tr>
+            <tr>
+              <td>No. Filters</td>
+              <td>${NoFilters}</td>
+              <td>No.</td>
+            </tr>
+            <tr>
+              <td>Filtration Area per Filter</td>
+              <td>${FiltrationAreaPerFilter}</td>
+              <td>m&sup2</td>
+            </tr>
+            <tr>
+              <td>Filter Diameter (D)</td>
+              <td>${parseFloat(FilterDiameter).toFixed(2)}</td>
+              <td>m</td>
+            </tr>
+            <tr>
+              <td>Filter Height (H)</td>
+              <td>${FilterHeight}</td>
+              <td>m</td>
+            </tr>
+            <tr>
+              <td>Top Collector Height (TC)</td>
+              <td>${TopCollectorHeight}</td>
+              <td>m</td>
+            </tr>
+            <tr>
+              <td>Dished End Height (TC)</td>
+              <td>${parseFloat(DishedEndHeight).toFixed(2)}</td>
+              <td>m</td>
+            </tr>
+            </table>
+</td>
+<td colspan=2>
+            <table border="collapse">
+              <tr class="heading">
+              <td colspan=3 style="text-align:center">Backwash</td>
+            </tr>
+            <tr>
+              <td>Backwash Temperature</td>
+              <td>${BackwashTemperature}</td>
+              <td>&#8451</td>
+            </tr>
+            <tr>
+              <td>Backwash Velocity</td>
+              <td>${BackwashVelocity}</td>
+              <td>m/h</td>
+            </tr>
+            <tr>
+              <td>Filtration Bed Expansion</td>
+              <td>${FiltrationBedExpansion}</td>
+              <td>% (min. 20%)</td>
+            </tr>
+            <tr>
+              <td>Backwash Flow Rate</td>
+              <td>${BackwashFlowRate}</td>
+              <td>m&sup3/h</td>
+            </tr>
+            <tr>
+              <td>Recommended Internal Pipe Diameter</td>
+              <td>${RecommendedInternalPipeDiameter}</td>
+              <td>mm (2 m/s)</td>
+            </tr>
+            <tr>
+              <td>Minimum Internal Pipe Diameter</td>
+              <td>${Math.round(MinimumInternalPipeDiameter)}</td>
+              <td>mm (2.5 m/s)</td>
+            </tr>
+            <tr class="heading">
+              <td colspan=3 style="text-align:center">Filtration Cycle Time</td>
+            </tr>
+            <tr>
+              <td>Suspended Solids Loading</td>
+              <td>${SuspendedSolidsLoading}</td>
+              <td>TSS mg/l</td>
+            </tr>
+            <tr>
+              <td>AFM Standard Filtration Layers : </td>
+              <td>${afmStandardFilterationLayers}</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Flow Velocity</td>
+              <td>${flowVelocity}</td>
+              <td>m/h</td>
+            </tr>
+           
+              </table>
+  </td>
+              </tr>
+              <tr>
+<td colspan="2">
+        <table border="collapse" onchange="calculateResults()" id="fixmanualtable">
+            <tr class="heading">
+              <td colspan=7 style="text-align:center">AFM Filterd Layering</td>
+            </tr>
+            <tr>
+              <th style="font-weight:normal;" >Select<sup>(1)</sup> AFM Standard Filtration Layers (m): </th>
+              <th style="background-color:#375623;font-weight:normal;">AFMs Grade 3 Below Laterals</th>
+              <th style="background-color:#375623;font-weight:normal;">AFMs Grade 3 Above Laterals</th>
+              <th style="background-color:#5a8c39;font-weight:normal;">${AFMGrade2}</th>
+              <th style="background-color:#a9d08e;color:black;font-weight:normal;">${AFMGrade1}</th>
+              <th style="background-color:#c6e0b4;color:black;font-weight:normal;">AFMs Grade 0</th>
+              <th style="background-color:grey;font-weight:normal;">Anthracite 0.6-1.8mm(2)</th>
+            </tr>
+            <tr>
+              <td>${afmStandardFilterationLayers}</td>
+              <td value=${FixAFMGrade3BelowLateral} id="FixAFMGrade3BelowLateral" class="FixAFMGrade3BelowLateral"> </td>
+              <td value=${FixAFMGrade3AboveLateral} id="FixAFMGrade3AboveLateral" class="FixAFMGrade3AboveLateral"> </td>
+              <td value=${fixAFMGrade2} id="fixAFMGrade2" class="fixAFMGrade2"> </td>
+              <td value=${fixAFMGrade1} id="fixAFMGrade1" class="fixAFMGrade1"> </td>
+              <td value=${fixAFMGrade0} id="fixAFMGrade0" class="fixAFMGrade0"> </td>
+              <td value=${fixAnthracite} id="fixAnthracite" class="fixAnthracite"> </td>
+            </tr>
+            <tr>
+              <td>Manual Input (m)</td>
+              <td>${manualAFMGrade3BelowLateral}</td>
+              <td>${manualAFMGrade3AboveLateral}</td>
+              <td>${manualAFMGrade2}</td>
+              <td>${manualAFMGrade1}</td>
+              <td>${manualAFMGrade0}</td>
+            <td>${manualAnthracite}</td>
+            </tr>
+            <tr>
+              <td colspan=7 style="text-align:left">
+              (1)Filtration layer height is based on recommended media ratio in % & media bed expansion (see IFU)<br/>
+                   Select backwash velocity 30-45m/h to adjust bed expansion not execeeding 200mm freeboard
+                   <br/>
+               (2) Recommended Anthracite Layer 150-250mm (Standard 200mm)
+                        <br/>
+                        If Anthracite layer is <0,2m indicated filtration cycle time is reduced
+                      </td>
+                    </tr>
+                  </table>
+                 </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <table border="collapse" id="fixmanualtable">
+                      <tr class="heading">
+                        <td colspan=6 style="text-align:center">AFM Quantity (total for all Filters)</td>
+                      </tr>
+                      <tr>
+                        <th></th>
+                        <th  style="background-color:#375623;font-weight:normal;">${manualAFMGrade3BelowLateral > 0 ? "AFMs Grade 3" : " "}</th>
+                        <th  style="background-color:#5a8c39;font-weight:normal;">${manualAFMGrade2 > 0 ? AFMGrade2 : " "}</th>
+                        <th  style="background-color:#a9d08e;color:black;font-weight:normal;">${manualAFMGrade1 > 0 ? AFMGrade1 : " "}</th>
+                        <th  style="background-color:#c6e0b4;color:black;font-weight:normal;">${manualAFMGrade0 > 0 ? "AFMs Grade 0" : " "}</th>
+                        <th  style="background-color:grey;font-weight:normal;">${manualAnthracite > 0 ? "AnAnthracite 0.6-1.8mm(2)thracite" : " "}</th>
+                      </tr>
+                      <tr class="bold">
+                        <td>Media weight 1 Filter (kg)</td>
+                        <td>${parseFloat(MediaWeightGrade3All).toFixed(0)}</td>
+                        <td>${parseFloat(MediaWeightGrade2).toFixed(0)}</td>
+                        <td>${parseFloat(MediaWeightGrade1).toFixed(0)}</td>
+                        <td>${parseFloat(MediaWeightGrade0).toFixed(0)}</td>
+                        <td>${parseFloat(MediaWeightAnthracite).toFixed(0)}</td>
+                      </tr>
+                      <tr class="bold">
+                        <td>Media weight all Filters (kg)</td>
+                        <td>${parseFloat(M23).toFixed(0)}</td>
+                        <td>${parseFloat(N23).toFixed(0)}</td>
+                        <td>${parseFloat(O23).toFixed(0)}</td>
+                        <td>${parseFloat(P23).toFixed(0)}</td>
+                        <td>${parseFloat(Q23).toFixed(0)}</td>
+                      </tr>
+                      <tr>
+                        <td>Total amount 25kg bags:</td>
+                        <td>${parseFloat(M24).toFixed(1)}</td>
+                        <td>${parseFloat(N24).toFixed(1)}</td>
+                        <td>${parseFloat(O24).toFixed(1)}</td>
+                        <td>${parseFloat(P24).toFixed(1)}</td>
+                        <td>${parseFloat(Q24).toFixed(1)}</td>
+                      </tr>
+                      <tr class="bold">
+                        <td>AFM total:</td>
+                        <td>${parseFloat(AFMTotalM3).toFixed(2)}</td>
+                        <td>m&sup3</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                       <tr>
+                        <td>AFM total:</td>
+                        <td>${parseFloat(AFMTotalMt).toFixed(2)}</td>
+                        <td>mt</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>AFM total bags </td>
+                        <td>${parseFloat(AFMTotakBag).toFixed(0)}</td>
+                        <td>x 25 kg bags</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>AFM full palletes à 40 x 25kg (1 t)</td>
+                        <td>${parseFloat(AFMFullPalletes).toFixed(0)}</td>
+                        <td>+ 1 pallet @</td>
+                        <td>${parseFloat(AFMFullPalletes2).toFixed(0)}</td>
+                        <td>bags (25kg)</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>AFM total amount of palettes</td>
+                        <td>${AFMtotalAmountofPalettes}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+<td>
+<div style="position:relative;text-align:left"> 
+  <div style="
+  bottom:0;
+  margin-bottom:30px;
+  max-width:44.5%;
+  margin-left:47px;
+  height:180px;
+  width:120%;
+  color:white;
+  position:absolute;
+  z-index:1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;"> 
+    <div style="background-color:#8b8b8b ;height:${manualAnthracite*100}%;"> ${manualAnthracite == 0 ? "" : "Anthracite"} 
+    </div> 
+    <div style="background-color:#c6e0b4 ;height:${manualAFMGrade0*100}%;"> ${manualAFMGrade0 == 0 ? "" : "AFM Grade 0"} 
+    </div> 
+    <div style="background-color:#a9d08e ; height:${manualAFMGrade1*100}%;">${manualAFMGrade1 == 0 ? "" : "AFM Grade 1"} 
+    </div> 
+    <div style="background-color:#6b9e48 ; height:${manualAFMGrade2*100}%;">${manualAFMGrade2 == 0 ? "" : "AFM Grade 2"} 
+    </div> 
+    <div style="background-color:#375623 ; height:${manualAFMGrade3BelowLateral*100}%;">${manualAFMGrade3BelowLateral == 0 ? "" : "AFM Grade 3"} 
+    </div> 
+  </div> 
+  <img src="for extra use (1).png" alt="" style="width:100%;height:100%;position:relative;z-index:2;"> 
+</div>
+  </td>
+  <td>
+    <table style="border:none;text-align:right" >
+      <tr style="text-align:center;" class="bold">
+        <td colspan=2>Filter</td>
+      </tr>
+      <tr>
+        <td>Top collector height (m)</td>
+        <td>${TopCollectorHeight}</td>
+      </tr>
+      <tr></tr>
+      <tr style="text-align:center;" class="bold">
+        <td colspan=2>AFM only</td>
+      </tr>
+      <tr>
+        <td>Media depth (within TC)</td>
+        <td>${parseFloat(MediaDepthWithinTc).toFixed(2)}</td>
+      </tr>
+      <tr>
+        <td>Media expanded depth (within TC)</td>
+        <td>${parseFloat(MediaExpandedDepthwithinTC).toFixed(2)}</td>
+      </tr>
+      <tr>
+        <td>Freeboard after bed expansion</td>
+        <td style="background-color:${colorbg};color:white;">${parseFloat(FreeBoardAfterbedExpansion).toFixed(2)}</td>
+      </tr>
+      </table>
+
+  </td>
+  </tr>
+`;
+
+  function checkTotalHeight() {
+    if(FreeBoardAfterbedExpansion > 0.2){
+            }else if(FreeBoardAfterbedExpansion > 0.15){
+      alert("Error: Max limit is near!");
+            }else{
+              alert("Error: Max limit exceeds!");
+            }
+  }
+  checkTotalHeight();
+
+            document.getElementById("FixAFMGrade3BelowLateral").innerHTML = FixAFMGrade3BelowLateral;
+            document.getElementById("FixAFMGrade3AboveLateral").innerHTML = parseFloat(FixAFMGrade3AboveLateral).toFixed(2);
+            document.getElementById("fixAFMGrade2").innerHTML = parseFloat(fixAFMGrade2).toFixed(2);
+            document.getElementById("fixAFMGrade1").innerHTML = parseFloat(fixAFMGrade1).toFixed(2);
+            document.getElementById("fixAFMGrade0").innerHTML = parseFloat(fixAFMGrade0).toFixed(2);
+            document.getElementById("fixAnthracite").innerHTML = parseFloat(fixAnthracite).toFixed(2);
+
+            
+
+          }).catch(error => {
+            console.error('Error in calculations:', error);
+          });
+
+        })
+        .catch(error => {
+          console.error('Error fetching or processing the data:', error);
+        });
+      let AFMngG2P; //target 1
+      let AFMsG2P;
+      let AFMngG1P; //target 2
+      let AFMsG1P; //target 3
+      let AFMsG0P; //target 4
+
+      // Function to calculate the value based on the Excel formula
+      function calculateValue(data, value, backwashVelocity, targetKey, targetVariable) {
+        return new Promise((resolve, reject) => {
+          const targetObject = data.find(obj => Object.keys(obj).includes(targetKey));
+          if (targetObject) {
+            const targetData = targetObject[targetKey];
+            let nestedData;
+            if (value == 10 || value == 20 || value == 30) {
+              nestedData = targetData[value.toString()];
+            } else {
+              return resolve(null);
+            }
+            if (nestedData && nestedData[backwashVelocity] !== undefined) {
+              window[targetVariable] = nestedData[backwashVelocity];
+              AFMngG2P = window['AFMngG2P']; //target 1
+              AFMsG2P = 0;
+              AFMngG1P = window['AFMngG1P']; //target 2
+              AFMsG1P = window['AFMsG1P']; //target 3
+              AFMsG0P = window['AFMsG0P']; //target 4
+              //console.log(`${targetVariable}----------------------------------------`, window[targetVariable]);
+              return resolve();
+            } else {
+              return resolve(null);
+            }
+          } else {
+            return resolve(null);
+          }
+        });
+      }
+    }
+  </script>
+  <!-- navbar end -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

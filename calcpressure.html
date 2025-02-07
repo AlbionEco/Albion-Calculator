@@ -157,18 +157,21 @@
                 <td id="v1"></td>
                 <td id="dv1"></td>
                 <td>1.56</td>
+<td>Volume 55% </td>
               </tr>
               <tr>
                 <td class="tdhead">Activated Carbon Media Volume</td>
                 <td id="v2"></td>
                 <td id="dv2"></td>
                 <td>0.55</td>
+<td>Volume 50%</td>
               </tr>
               <tr>
                 <td class="tdhead">AFM Media Volume</td>
                 <td id="v3"></td>
                 <td id="dv3"></td>
                 <td>1.26</td>
+                <td>Volume 60%</td>
               </tr>
             </table>
             
@@ -203,7 +206,7 @@
 
         //flow
         const flow = PlantCapacity / 20;
-        document.getElementById("flow").value = flow;
+        document.getElementById("flow").value = parseFloat(flow).toFixed(2);
 
         //flow per min
         const flowPerMin = flow / 60;
@@ -220,8 +223,8 @@
 
 
         //requested volume
-        const ReqVolume = parseFloat(flowPerMin * contactTime * 1.4).toFixed(2);
-        document.getElementById("ReqVolume").value = ReqVolume;
+        const ReqVolume = flowPerMin * contactTime * 1.4;
+        document.getElementById("ReqVolume").value = parseFloat(ReqVolume).toFixed(2);
 
         //height
         const height = ReqVolume / area;
@@ -231,28 +234,28 @@
         document.getElementById("VesselHOS").value = VesselHOS;
 
         //v1 = volume 1
-        const v1 = parseFloat((ReqVolume * 1000 )* 55 / 100).toFixed(1);
-        document.getElementById("v1").innerHTML = v1;
+        const v1 = (ReqVolume * 1000 )* 55 / 100;
+        document.getElementById("v1").innerHTML = parseFloat(v1).toFixed(1);
 
         //dv1 = densityvolume1
-        const dv1 = parseFloat(v1 * 1.56).toFixed(1);
-        document.getElementById("dv1").innerHTML = dv1;
+        const dv1 = v1 * 1.56;
+        document.getElementById("dv1").innerHTML = parseFloat(dv1).toFixed(1);
 
         //v2
-        const v2 = parseFloat((ReqVolume * 1000) * 50/ 100).toFixed(1);
-        document.getElementById("v2").innerHTML = v2;
+        const v2 = (ReqVolume * 1000) * 50/ 100;
+        document.getElementById("v2").innerHTML = parseFloat(v2).toFixed(1);
 
         //dv2 = densityvolume1
-        const dv2 = parseFloat(v2 * 0.55).toFixed(1);
-        document.getElementById("dv2").innerHTML = dv2;
+        const dv2 = v2 * 0.55;
+        document.getElementById("dv2").innerHTML = parseFloat(dv2).toFixed(1);
 
         //v3
-        const v3 = parseFloat((ReqVolume * 1000) * 60 / 100).toFixed(1);
-        document.getElementById("v3").innerHTML = v3;
+        const v3 = (ReqVolume * 1000) * 60 / 100;
+        document.getElementById("v3").innerHTML = parseFloat(v3).toFixed(1);
 
         //dv3 = densityvolume1
-        const dv3 = parseFloat(v3 * 1.26).toFixed(1);
-        document.getElementById("dv3").innerHTML = dv3;
+        const dv3 =v3 * 1.26;
+        document.getElementById("dv3").innerHTML =  parseFloat(dv3).toFixed(1);
 
         //thickness
         const rawThickness= document.getElementById('Thickness').value;

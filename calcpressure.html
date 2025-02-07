@@ -88,11 +88,18 @@
           />
           <div class="entercontainer">
             <div class="fields">
-              <label>Plant Capacity (KLD)</label>
+              <label>Select Input Type:</label>
+              <input type="radio" id="plantCapacityOption" name="inputType" value="PlantCapacity" checked>
+              <label for="plantCapacityOption"> Plant Capacity</label>
+              <input type="radio" id="flowOption" name="inputType" value="Flow">
+              <label for="flowOption"> Flow</label>
+            </div>
+            <div class="fields">
+              <label>Plant Capacity / Flow (m<sup>3</sup>/hr)</label>
               <input
                 type="text"
-                id="PlantCapacity"
-                class="PlantCapacity"
+                id="PlantCapacityorFlow"
+                class="PlantCapacityorFlow"
                 required
               />
             </div>
@@ -189,7 +196,6 @@
 
       function handleSubmit(event) {
         event.preventDefault();
-        const PlantCapacity = document.getElementById("PlantCapacity").value;
         const Velocity = document.getElementById("Velocity").value;
         const contactTime = document.getElementById("contactTime").value;
 
@@ -200,9 +206,19 @@
         const velocity = 0.00000785;
         const SF = 50;
         const pi = 3.147;
+let flow =0;
+let PlantCapacity = 0;
+        if(plantCapacityOption.checked){
+          PlantCapacity = document.getElementById("PlantCapacityorFlow").value;
+        flow= PlantCapacity / 20;
+        }else if(flowOption.checked){
+           flow = document.getElementById("PlantCapacityorFlow").value ;
+           PlantCapacity = flow * 20;
+        }else{
+          alert("Please select the input type");
+        }
 
         //flow
-        const flow = PlantCapacity / 20;
         document.getElementById("flow").value = parseFloat(flow).toFixed(2);
 
         //flow per min
@@ -228,7 +244,7 @@
 
         //VesselHOS
         const VesselHOS = height * 1000;
-        document.getElementById("VesselHOS").value = VesselHOS;
+        document.getElementById("VesselHOS").value = Math.ceil(VesselHOS);
 
         //v1 = volume 1
         const v1 = (ReqVolume * 1000 )* 55 / 100;

@@ -8,7 +8,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.5;
   color: #333;
   background-color: #f9f9f9;
@@ -48,27 +48,29 @@ h1 {
 
 h2 {
   margin: 50px 0px 0px 0px;
+  font-size: 20px !important;
 }
 
 label {
   margin-bottom: 10px;
-  width: 30%;
+  width: 38%;
   display: inline;
+  font-size: 14px;
 }
 
 input[type="number"] {
   margin-left: 5px;
   border: 1px solid rgb(130, 219, 129);
   width: 70%;
-  padding: 10px;
-  font-size: 16px;
+  padding: 2px 6px;
+  font-size: 14px;
   border-radius: 5px;
   display: inline-block;
 }
 input[type="text"] {
   width: 70%;
-  padding: 10px;
-  font-size: 16px;
+  padding:  2px 6px;
+  font-size: 14px;
   border: 1px solid rgb(130, 219, 129);
   border-radius: 5px;
   display: inline-block;
@@ -84,12 +86,12 @@ input[type="text"]:-webkit-autofill:focus {
 button {
   background-color: #4caf50;
   color: #fff;
-  padding: 10px 40px;
+  padding: 5px 30px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   margin: 50px 0px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -113,8 +115,8 @@ button:hover {
 .resultcontainer input[type="text"] {
   margin-left: auto;
   width: 60%;
-  padding: 10px;
-  font-size: 16px;
+  padding:  2px 6px;
+  font-size: 14px;
   border: 1px solid #134e75;
   border-radius: 5px;
   display: inline-block;
@@ -125,16 +127,16 @@ button:hover {
 
 select {
   width: 135px;
-  padding: 10px;
+  padding: 2px;
   margin-left: 10px;
-  font-size: 15px;
+  font-size: 14px !important;
   border-radius: 5px;
   border: 1px solid rgb(130, 219, 129);
 }
 
 option {
-  padding: 10px;
-  font-size: 15px;
+  padding: 3px;
+  font-size: 14px;
 }
 
 hr {
@@ -143,7 +145,8 @@ hr {
   background-color: rgb(100, 182, 98);
   border-radius: 5px;
   width: 450px;
-  margin-bottom: 20px;
+  margin-bottom: 50px !important;
+  margin-top: 0px !important;
   align-self: center;
 }
 
@@ -195,7 +198,7 @@ hr {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 14px;
 }
 
 .topnav a:hover {
@@ -216,13 +219,16 @@ hr {
 
 /* radio css */
 .radio {
-  width: 140px;
-  padding: 10px 25px;
+  width: 28%;
+  padding: 5px 5px;
   border: 1px solid rgb(130, 219, 129);
   border-radius: 5px;
-  margin: 0px 20px;
+  margin: 0px 10px;
 }
 
+.radio label{
+  width:85%
+}
 
 /* table css */
 #table {
@@ -232,7 +238,9 @@ hr {
   border-spacing: 0;
   border-radius: 7px;
   border: 1px solid #134e75;
-  overflow: hidden; }
+  overflow: hidden; 
+  font-size:14px;
+}
 
 #table tr {
   background-color: #f9f9f9; 
@@ -244,7 +252,7 @@ hr {
 
 #table td, 
 #table th {
-  padding: 15px 20px;
+  padding: 5px 10px;
   border-radius: 10px;
   text-align: center;
   border-bottom: 1px solid #ddd; 

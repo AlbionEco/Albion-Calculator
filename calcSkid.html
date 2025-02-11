@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator for Skid</title>
+  <link rel="stylesheet" href="afm.css" />
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="Albion_Only_Logo-removebg-preview.png" />
+  <style>
+    table tr td {
+      border-collapse: collapse;
+      border: 1px solid grey;
+    }
+
+    table td:first-of-type {
+      width: 50%;
+    }
+
+    table td:not(:first-child) {
+      width: 25%;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <div id="nav-placeholder"></div>
+  <script>
+    // Function to load the navbar
+    function loadNavbar() {
+      fetch('navbaralbion.html')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.text();
+        })
+        .then(data => {
+          document.getElementById('nav-placeholder').innerHTML = data;
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+    // Load the navbar when the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', loadNavbar);
+  </script>
+  <!-- navbar End -->
+
+  <div class="maincontainer">
+    <div id="innercontainer">
+      <h3 class="topHeading">Skid Calculation</h3>
+
+      <!-- ------------Enter container container------- -->
+      <form id="projectionForm">
+        <div><b>MS-TW</b></div><br>
+        <div class="form-group">
+          <label>12.5 m<sup>2</sup> Membrane Frame QTY. (No.)</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="qty" class="qty" required />
+        </div>
+
+        <!-- SUBMIT BUTTON  -->
+        <button type="button" onclick="calculateResults()" style="margin-bottom:40px;">Submit</button>
+    </div>
+    <!-- ------------Result container------- -->
+    <table>
+      <tbody id="resultsTable">
+        <!-- Dynamic rows will be added here -->
+      </tbody>
+    </table>
+    <!-- PRINT BUTTON -->
+    <div class="btns">
+      <button id="print-btn" onclick="window.print()" style="margin-top:40px; margin:40px 40% 0px 40%">Print
+        Table</button>
+    </div>
+  </div>
+  </form>
+  </div>
+  </div>
+
+  <script>
+    //onwindow load
+    //  window.onload = function () {
+    // const cookieName = "token";
+    // if (document.cookie.indexOf(cookieName + "=") === -1) {
+    // Cookie does not exist, redirect to login page or display error message
+    //       window.location.href = "index.html";
+    //       return;
+    //     }
+    //   };
+    //   function handleLogOut() {
+    //     document.cookie = "token=" + ";max-age=1;path=/";
+    //     console.log("cookie cleared");
+    //     window.location.href = "index.html";
+    //   }
+
+    function calculateResults() {
+      let qty = document.getElementById("qty").value;
+      qty = Number(qty);
+      const thickBoxpipe = ((1.2 * 4) + (0.61 * 6) + (((qty + 1) * 0.085) + 0.08) * 6);
+      const pipeDouble = qty * 2;
+      const porforatedPipe = (qty + 1) * 2;
+      const nippleQty = (pipeDouble + porforatedPipe) / 2;
+      const ThreadedNipple4 = nippleQty / 2;
+      const ThreadedNipple6 = 1;
+
+
+
+      //result table
+      const resultsTable = document.getElementById('resultsTable');
+      resultsTable.innerHTML = `
+      <thead  id="resultsTablehead">
+        <tr>
+          <th colspan="3" style="background-color:rgb(210, 245, 215); text-align: left; color:black; font-weight: 400;">
+            <img src="bluefox-logo-with-tagline.png" alt="" class="logo" style="float: right; margin:10px;">
+            <b>BLUFOX ECOVENTURES LLP </b>
+            <br >www.blufoxmembranes.com
+          </th>
+        </tr>
+        <tr>
+          <th>Material SS 304 unpolished</th>
+          <th colspan="2">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>12.5 m&sup2 Membrane Frame Qty.</td>
+          <td>${qty}</td>
+          <td>No.</td>
+        </tr>
+        <tr>
+          <td>1/2" Nipple Qty</td>
+          <td>${nippleQty}</td>
+          <td>m/h</td>
+        </tr>
+        <tr>
+          <td>40mm x 40mm x 2mm thick Box Pipe</td>
+          <td>${parseFloat(thickBoxpipe).toFixed(2)}</td>
+          <td> mtr</td>
+        </tr>
+        <tr>
+          <td>1/2" threaded Nipple 4" Long</td>
+          <td>${parseFloat(ThreadedNipple4).toFixed(2)}</td>
+          <td>No.</td>
+        </tr>
+        <tr>
+          <td>1" Threaded Nipple 6"  Long</td>
+          <td>${ThreadedNipple6}</td>
+          <td>No.</td>
+        </tr>
+        <tr>
+          <td colspan=3>
+            <span style="font-weight: 700;color:red;">NOTE :</span> <br>
+            UP TO 6 MEMBRANE YOU WILL GET 1" THREADED NIPPLE (6" LONG) = 1 NOS.
+            <br> ABOVE 6 MEMBRANE YOU WILL GET 1" THREADED NIPPLE (6" LONG) = 2 NOS.</td>
+        </tr>
+      </tbody>
+    </table>     
+`;
+    }
+  </script>
+  <!-- navbar end -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

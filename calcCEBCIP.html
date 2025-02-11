@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator for Capacity of Dosing Pump</title>
+  <link rel="stylesheet" href="afm.css" />
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="Albion_Only_Logo-removebg-preview.png" />
+  <style>
+    #simpletable {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 40px;
+      border:1px solid rgb(161, 160, 160);
+    }
+
+    #simpletable td, #simpletable th {
+      max-width: 12.5%;
+      border:1px solid rgb(161, 160, 160);
+    }
+    #resultsTable table{
+      width: 100%;
+      padding: 2px 6px;
+    }
+
+    #resultsTable th, #resultsTable td {
+      padding: 2px 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <div id="nav-placeholder"></div>
+  <script>
+    // Function to load the navbar
+    function loadNavbar() {
+      fetch('navbaralbion.html')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.text();
+        })
+        .then(data => {
+          document.getElementById('nav-placeholder').innerHTML = data;
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+    // Load the navbar when the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', loadNavbar);
+  </script>
+  <!-- navbar End -->
+
+  <div class="maincontainer">
+    <div id="innercontainer">
+      <h3 class="topHeading">Calculation of Capacity of Dosing Pump</h3>
+
+      <!-- ------------Enter container container------- -->
+      <form id="projectionForm">
+        <table style="border:1px solid black;" id="simpletable">
+          <thead>
+            <tr >
+              <th></th>
+              <th></th>
+              <th colspan="3"  style=" width:25%;">SUMITOMO MEMBRANE</th>
+              <th colspan="3"  style=" width:25%;">BLUFOX MEMBRANE</th>
+            </tr>
+            <tr>
+              <th  style=" width:25%;">PPM</th>
+              <th  style=" width:25%;">Disinfection</th>
+              <th  style=" width:25%;">Backwash</th>
+              <th  style=" width:25%;">CEB</th>
+              <th  style=" width:25%;">CIP</th>
+              <th  style=" width:25%;">Backwash</th>
+              <th  style=" width:25%;">CEB</th>
+              <th  style=" width:25%;">CIP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hypo</td>
+              <td>3 ppm</td>
+              <td>10 ppm</td>
+              <td>500 ppm</td>
+              <td>3000 ppm</td>
+              <td>20 ppm</td>
+              <td>500 ppm</td>
+              <td>2000 ppm</td>
+            </tr>
+            <tr>
+              <td>Citric</td>
+              <td>Nil</td>
+              <td>Nil</td>
+              <td>2000 ppm</td>
+              <td>20000 ppm</td>
+              <td>Nil</td>
+              <td>250 ppm</td>
+              <td>1000 ppm</td>
+            </tr>
+            <tr>
+              <td>NaOH</td>
+              <td>Nil</td>
+              <td>Nil</td>
+              <td>200 ppm</td>
+              <td>5000 ppm</td>
+              <td>Nil</td>
+              <td>Nil</td>
+              <td>Nil</td>
+            </tr>
+            <tr>
+              <td>CLO₂</td>
+              <td>0.3 ppm</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <div><b>For - Capacity of dosing pump & days to store chemical-Backwash</b></div><br>
+        <div class="form-group">
+          <label>Required PPM</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="RequiredPPM_backwash"
+            class="RequiredPPM_backwash" required />
+        </div>
+        <div class="form-group">
+          <label>Capacity of Water</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="CapacityofWater_backwash"
+            class="CapacityofWater_backwash" required />
+        </div>
+        <div class="form-group">
+          <label>Chemical Required</label>
+          <select name="ChemicalRequired_backwash" id="ChemicalRequired_backwash" onchange="showDisinfection()">
+            <option value="">--Select--</option>
+            <option value="Hypo-10%">Hypo - 10%</option>
+            <option value="Hypo-12%">Hypo - 12%</option>
+            <option value="NaOH-23%">NaOH - 23%</option>
+            <option value="NaOH-48%">NaOH - 48%</option>
+            <option value="Citric-30%">Citric - 30%</option>
+            <option value="Citric-100%">Citric - 100%</option>
+            <option value="Polymer-100%">Polymer - 100%</option>
+            <option value="PAC-30%">PAC - 30%</option>
+            <option value="PAC-100%">PAC - 100%</option>
+            <option value="CLO2-15%">CLO2 - 15%</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Capacity of Plant</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="CapacityofPlant_backwash"
+            class="CapacityofPlant_backwash" required />
+        </div>
+        <div class="form-group">
+          <label>Enter No of days to refill</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="Noofdaystorefill_backwash"
+            class="Noofdaystorefill_backwash" required />
+        </div>
+        <div class="form-group">
+          <label>Capacity of Tank</label>
+          <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="CapacityOfTank_backwash"
+            class="CapacityOfTank_backwash" required />
+        </div>
+        <div class="Disinfection" id="Disinfection">
+          <div><b>For - Capacity of dosing pump & days to store chemical-disinfection</b></div><br>
+          <div class="form-group">
+            <label>Required PPM</label>
+            <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="RequiredPPM_disinfection"
+              class="RequiredPPM_disinfection" required />
+          </div>
+          <div class="form-group">
+            <label>Capacity of Water</label>
+            <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')"
+              id="CapacityofWater_disinfection" class="CapacityofWater_disinfection" required />
+          </div>
+          <div class="form-group">
+            <label>Chemical Required</label>
+            <select name="ChemicalRequired_disinfection" id="ChemicalRequired_disinfection">
+              <option value="Hypo-10%">Hypo - 10%</option>
+              <!--<option value="Hypo-12%">Hypo - 12%</option>
+              <option value="NaOH-23%">NaOH - 23%</option>
+              <option value="NaOH-48%">NaOH - 48%</option>
+              <option value="Citric-30%">Citric - 30%</option>
+              <option value="Citric-100%">Citric - 100%</option>
+              <option value="Polymer-100%">Polymer - 100%</option>
+              <option value="PAC-30%">PAC - 30%</option>
+              <option value="PAC-100%">PAC - 100%</option> -->
+              <option value="CLO2-15%">CLO2 - 15%</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Capacity of Plant</label>
+            <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')"
+              id="CapacityofPlant_disinfection" class="CapacityofPlant_disinfection" required />
+          </div>
+          <div class="form-group">
+            <label>Enter No of days to refill</label>
+            <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')"
+              id="Noofdaystorefill_disinfection" class="Noofdaystorefill_disinfection" required />
+          </div>
+          <div class="form-group">
+            <label>Capacity of Tank</label>
+            <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')" id="CapacityOfTank_disinfection"
+              class="CapacityOfTank_disinfection" required />
+          </div>
+          <div class="form-group">
+            <label>Total minutes in a day</label>
+            <input type="text" oninput="this.value = this.value.replace(/[^\d.]/g, '')"
+              id="TotalMinutesInADay_disinfection" class="TotalMinutesInADay_disinfection" required />
+          </div>
+        </div>
+
+
+
+        <!-- SUBMIT BUTTON  -->
+        <button type="button" onclick="calculateResults()" style="margin-bottom:40px;">Submit</button>
+    </div>
+    <!-- ------------Result container------- -->
+    <table>
+      <tbody id="resultsTable">
+        <!-- Dynamic rows will be added here -->
+      </tbody>
+    </table>
+    <!-- PRINT BUTTON -->
+    <div class="btns">
+      <button id="print-btn" onclick="window.print()" style="margin-top:40px; margin:40px 40% 0px 40%">Print
+        Table</button>
+    </div>
+  </div>
+  </form>
+  </div>
+  </div>
+
+  <script>
+    //onwindow load
+    //  window.onload = function () {
+    // const cookieName = "token";
+    // if (document.cookie.indexOf(cookieName + "=") === -1) {
+    // Cookie does not exist, redirect to login page or display error message
+    //       window.location.href = "index.html";
+    //       return;
+    //     }
+    //   };
+    //   function handleLogOut() {
+    //     document.cookie = "token=" + ";max-age=1;path=/";
+    //     console.log("cookie cleared");
+    //     window.location.href = "index.html";
+    //   }
+
+    document.getElementById("Disinfection").style.display = "none";
+    document.getElementById("disinfectionTable").style.display = "none";
+    function showDisinfection() {
+      let ChemicalRequired_backwash = document.getElementById("ChemicalRequired_backwash").value;
+      if (ChemicalRequired_backwash == "Hypo-10%" || ChemicalRequired_backwash == "CLO2-15%") {
+        document.getElementById("Disinfection").style.display = "block";
+        document.getElementById("disinfectionTable").style.display = "block";
+      } else {
+        document.getElementById("Disinfection").style.display = "none";
+        document.getElementById("disinfectionTable").style.display = "none";
+      }
+    }
+
+
+
+    function calculateResults() {
+      const RequiredPPM_backwash = Number(document.getElementById('RequiredPPM_backwash').value);
+      const CapacityofWater_backwash = Number(document.getElementById('CapacityofWater_backwash').value);
+      const CapacityofPlant_backwash = Number(document.getElementById('CapacityofPlant_backwash').value);
+      const Noofdaystorefill_backwash = Number(document.getElementById('Noofdaystorefill_backwash').value);
+      const CapacityOfTank_backwash = Number(document.getElementById('CapacityOfTank_backwash').value);
+      let ChemicalRequired_backwash = document.getElementById("ChemicalRequired_backwash").value;
+
+      const RequiredPPM_disinfection = Number(document.getElementById('RequiredPPM_disinfection').value);
+      const CapacityofWater_disinfection = Number(document.getElementById('CapacityofWater_disinfection').value);
+      const ChemicalRequired_disinfection = document.getElementById('ChemicalRequired_disinfection').value;
+      const CapacityofPlant_disinfection = Number(document.getElementById('CapacityofPlant_disinfection').value);
+      const Noofdaystorefill_disinfection = Number(document.getElementById('Noofdaystorefill_disinfection').value);
+      const CapacityOfTank_disinfection = Number(document.getElementById('CapacityOfTank_disinfection').value);
+      const TotalMinutesInADay_disinfection = Number(document.getElementById('TotalMinutesInADay_disinfection').value);
+
+      let ChemicalConcentration_backwash;
+      if (ChemicalRequired_backwash == "Hypo-10%") {
+        ChemicalConcentration_backwash = 0.1;
+      } else if (ChemicalRequired_backwash == "Hypo-12%") {
+        ChemicalConcentration_backwash = 0.12;
+      } else if (ChemicalRequired_backwash == "NaOH-23%") {
+        ChemicalConcentration_backwash = 0.23;
+      } else if (ChemicalRequired_backwash == "NaOH-48%") {
+        ChemicalConcentration_backwash = 0.48;
+      } else if (ChemicalRequired_backwash == "Citric-30%") {
+        ChemicalConcentration_backwash = 0.3;
+      } else if (ChemicalRequired_backwash == "Citric-100%") {
+        ChemicalConcentration_backwash = 1;
+      } else if (ChemicalRequired_backwash == "Polymer-100%") {
+        ChemicalConcentration_backwash = 1;
+      } else if (ChemicalRequired_backwash == "PAC-30%") {
+        ChemicalConcentration_backwash = 0.3;
+      } else if (ChemicalRequired_backwash == "PAC-100%") {
+        ChemicalConcentration_backwash = 1;
+      } else if (ChemicalRequired_backwash == "CLO2-15%") {
+        ChemicalConcentration_backwash = 0.15;
+      }
+      console.log(ChemicalConcentration_backwash,"ChemicalConcentration_backwash");
+      
+
+      const chemicalQTYRequired_backwash = ((RequiredPPM_backwash * CapacityofWater_backwash) / 1000000) / ChemicalConcentration_backwash;
+      const flow_backwash = CapacityofPlant_backwash / 20;
+      const Backwashflow_backwash = flow_backwash * 1.5;
+      const CapacityOfWaterPerDay_backwash = ((Backwashflow_backwash * 1000) / 60) * 24;
+      const ChemicalRequiredperDay_backwash = chemicalQTYRequired_backwash;
+      const TotalChemical_backwash = ChemicalRequiredperDay_backwash * Noofdaystorefill_backwash;
+      const dosingPumpCapacity_backwash = ((CapacityOfTank_backwash + TotalChemical_backwash) / (24 * Noofdaystorefill_backwash)) * 60
+
+
+      let ChemicalConcentration_disinfection;
+      if (ChemicalRequired_disinfection == "Hypo-10%") {
+        ChemicalConcentration_disinfection = 0.1;
+      } else if (ChemicalRequired_disinfection == "CLO2-15%") {
+        ChemicalConcentration_disinfection = 0.15;
+      }
+    const chemicalQTYRequired_disinfection = ((RequiredPPM_disinfection * CapacityofWater_disinfection) / 1000000) / ChemicalConcentration_disinfection;
+    const flow_disinfection = CapacityofPlant_disinfection / 20;
+    const CapacityOfWaterPerDay_disinfection = ((flow_disinfection * 1000) / 60) * TotalMinutesInADay_disinfection;
+    const ChemicalRequiredperDay_disinfection = chemicalQTYRequired_disinfection;
+    const TotalChemical_disinfection = ChemicalRequiredperDay_disinfection * Noofdaystorefill_disinfection;
+    const dosingPumpCapacity_disinfection = ((CapacityOfTank_disinfection + TotalChemical_disinfection) / (20 * Noofdaystorefill_disinfection));
+
+    //result table
+    const resultsTable = document.getElementById('resultsTable');
+    resultsTable.innerHTML = `
+      <thead  id="resultsTablehead">
+        <tr>
+          <th colspan="3" style="background-color:rgb(210, 245, 215); text-align: left; color:black; font-weight: 400;">
+            <img src="Albion_high_-_logo-removebg-preview.png" alt="" class="logo" style="float: right; margin:10px;">
+            <b>Albion Ecotech Pvt. Ltd. </b>
+            <br >www.albionecotech.com
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <table>
+              <tr>
+                <th colspan=3>Capacity of dosing pump & days to store chemical-Backwash</th>
+              </tr>
+               <tr>
+                <td>Required PPM</td>
+                <td>${RequiredPPM_backwash}</td>
+                <td></td>
+              </tr>
+               <tr>
+                <td>Capacity of Water</td>
+                <td>${CapacityofWater_backwash}</td>
+                <td></td>
+              </tr>
+               <tr class="bold">
+                <td>Chemical Required</td>
+                <td>${ChemicalRequired_backwash}</td>
+                <td></td>
+              </tr>
+               <tr class="bold">
+                <td>Chemical QTY Required</td>
+                <td>${parseFloat(chemicalQTYRequired_backwash).toFixed(2)}</td>
+                <td>KLD</td>
+              </tr>
+              <tr>
+                <td>Capacity of Plant </td>
+                <td>${CapacityofPlant_backwash}</td>
+                <td>KLD</td>
+              </tr>
+              <tr>
+                <td>Flow </td>
+                <td>${flow_backwash}</td>
+                <td>m&sup3/hr</td>
+              </tr>
+              <tr>
+                <td>Backwash Flow</td>
+                <td>${parseFloat(Backwashflow_backwash).toFixed(2)}</td>
+                <td> m&sup3/hr</td>
+              </tr>
+              <tr>
+                <td>Capacity of water per day( as backwash runs for 1 min in every hour for both blufox and sumitomo)</td>
+                <td>${parseFloat(CapacityOfWaterPerDay_backwash).toFixed(2)}</td>
+                <td>LPD</td>
+              </tr>
+              <tr>
+                <td>Now Chemical Required/day</td>
+                <td>${parseFloat(ChemicalRequiredperDay_backwash).toFixed(2)}</td>
+                <td>kgs</td>
+              </tr>
+               <tr>
+                <td>Enter No of days to refill</td>
+                <td>${Noofdaystorefill_backwash}</td>
+                <td>days</td>
+              </tr>
+               <tr>
+                <td>Total Chemical</td>
+                <td>${parseFloat(TotalChemical_backwash).toFixed(2)}</td>
+                <td>kg</td>
+              </tr>
+               <tr>
+                <td>Capacity of Tank</td>
+                <td>${CapacityOfTank_backwash}</td>
+                <td>L</td>
+              </tr>
+               <tr>
+                <td>Dosing Pump Capacity</td>
+                <td>${parseFloat(dosingPumpCapacity_backwash).toFixed(2)}</td>
+                <td>LPH</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table class="disinfectionTable" id="disinfectionTable" onLoad="showDisinfection()">
+              <tr>
+                <th colspan=3>Capacity of dosing pump & days to store chemical-Disinfection</th>
+              </tr>
+               <tr>
+                <td>Required PPM</td>
+                <td>${RequiredPPM_disinfection}</td>
+                <td></td>
+              </tr>
+               <tr>
+                <td>Capacity of Water</td>
+                <td>${CapacityofWater_disinfection}</td>
+                <td></td>
+              </tr>
+               <tr class="bold">
+                <td>Chemical Required</td>
+                <td>${ChemicalRequired_disinfection}</td>
+                <td></td>
+              </tr>
+               <tr class="bold">
+                <td>Chemical QTY Required</td>
+                <td>${parseFloat(chemicalQTYRequired_disinfection).toFixed(2)}</td>
+                <td>KLD</td>
+              </tr>
+              <tr>
+                <td>Capacity of Plant </td>
+                <td>${CapacityofPlant_disinfection}</td>
+                <td>KLD</td>
+              </tr>
+              <tr>
+                <td>Flow </td>
+                <td>${flow_disinfection}</td>
+                <td>m&sup3/hr</td>
+              </tr>
+              <tr>
+                <td>Total Minute in a Day</td>
+                <td>${TotalMinutesInADay_disinfection}</td>
+                <td> minutes</td>
+              </tr>
+              <tr>
+                <td>Capacity of water per day( as backwash runs for 1 min in every hour for both blufox and sumitomo)</td>
+                <td>${parseFloat(CapacityOfWaterPerDay_disinfection).toFixed(2)}</td>
+                <td>LPD</td>
+              </tr>
+              <tr>
+                <td>Now Chemical Required/day</td>
+                <td>${parseFloat(ChemicalRequiredperDay_disinfection).toFixed(2)}</td>
+                <td>kgs</td>
+              </tr>
+               <tr>
+                <td>Enter No of days to refill</td>
+                <td>${Noofdaystorefill_disinfection}</td>
+                <td>days</td>
+              </tr>
+               <tr>
+                <td>Total Chemical</td>
+                <td>${parseFloat(TotalChemical_disinfection).toFixed(2)}</td>
+                <td>kg</td>
+              </tr>
+               <tr>
+                <td>Capacity of Tank</td>
+                <td>${CapacityOfTank_disinfection}</td>
+                <td>L</td>
+              </tr>
+               <tr>
+                <td>Dosing Pump Capacity</td>
+                <td>${parseFloat(dosingPumpCapacity_disinfection).toFixed(2)}</td>
+                <td>LPH</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>     
+`;
+showDisinfection();
+    }
+      
+
+  </script>
+  <!-- navbar end -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

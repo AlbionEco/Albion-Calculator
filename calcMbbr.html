@@ -148,38 +148,20 @@
                 <option value="0.50">50</option>
                 <option value="0.55">55</option> 
               </select>
-              <!-- <div class="radio">
-                <input
-                  type="radio"
-                  id="mediavolume"
-                  name="mediavolume"
-                  value="0.15"
-                />
-                <label for="mediavolume">15</label>
-              </div>
-              <div class="radio">
-                <input
-                  type="radio"
-                  id="mediavolume"
-                  name="mediavolume"
-                  value="0.20"
-                />
-                <label for="mediavolume">20</label>
-              </div>
-              <div class="radio">
-                <input
-                  type="radio"
-                  id="mediavolume"
-                  name="mediavolume"
-                  value="0.25"
-                />
-                <label for="mediavolume">25</label>
-              </div> -->
             </div>
             <div class="fields">
               <label>O2 transfer rate @ </label>
               <!-- drop down -->
-              <select id="o2transfer">
+              <select id="o2transferrate">
+                <option value="0.15">0.15</option>
+                <option value="0.20">0.20</option>
+                <option value="0.25">0.25</option>
+              </select>
+            </div>
+            <div class="fields">
+              <label>Air Diffuser Model</label>
+              <!-- drop down -->
+              <select id="airfine">
                 <option value="airfine1">Airfine - 1</option>
                 <option value="airfine3">Airfine - 3</option>
               </select>
@@ -367,8 +349,7 @@
         const nh4 = document.getElementById("nh4").value;
         const nh4o = document.getElementById("nh4o").value;
         const mediavolume = document.getElementById("mediavolume").value;
-
-console.log(mediavolume);
+const o2transferrate = document.getElementById("o2transferrate").value;
 
 
         // const mediavolumeradioButtons =
@@ -389,7 +370,7 @@ console.log(mediavolume);
           }
         }
 
-        let o2rate = 0;
+     
 
         const mediaradioradiobutton = document.getElementsByName("mediaradio");
         let mediaradio;
@@ -407,7 +388,6 @@ console.log(mediavolume);
         const beta = 0.7;
         const density = 1.2;
         const percentageofo2 = 0.215;
-        let depth = o2rate;
         const diflength = 1;
         const o2nh4 = 4.6;
 
@@ -495,65 +475,31 @@ console.log(mediavolume);
         //oxygen require
         const oxygen = calculateoxygen(bodload2, o2req);
 
-        ///o2 rate
-        const o2transfer = document.getElementById("o2transfer").value;
-        
-        
+        ///o2 rate    and
+        //difcalc
+        const airfine = document.getElementById("airfine").value;
         const air = document.getElementById("air").value;
        
-        
-        if (o2transfer === "airfine1") {
+        if (airfine === "airfine1") {
           if (air === "3SWD") {
-            o2rate = 0.15;
-          } else if (air === "4SWD") {
-            o2rate = 0.2;
-          } else if (air === "5SWD") {
-            o2rate = 0.3;
-          } else if (air === "6SWD") {
-            o2rate = 0.36;
-          } else {
-            o2rate = " Something Wrong try again";
-          }
-          // document.getElementById("o2rate").value = o2rate;
-        } else {
-          if (air === "3SWD") {
-            o2rate = 0.195;
-          } else if (air === "4SWD") {
-            o2rate = 0.26;
-          } else if (air === "5SWD") {
-            o2rate = 0.325;
-          } else if (air === "6SWD") {
-            o2rate = 0.39;
-          } else {
-            o2rate = " Something Wrong try again";
-          }
-          // document.getElementById("o2rate").value = o2rate;
-        }
-        let difcalc = 0;
-
-        
-        if (o2transfer === "airfine1") {
-          if ( o2rate == 0.15) {
             difcalc = 7.5;
-          } else if (o2rate == 0.2) {
+          } else if (air === "4SWD") {
             difcalc = 6.25;
-          } else if (o2rate == 0.3) {
+          } else if (air === "5SWD") {
             difcalc = 5.5;
-          }  else {
-            difcalc == " Something Wrong try again";
+          } else if (air === "6SWD") {
+            difcalc = 0;
           }
-          // document.getElementById("o2rate").value = o2rate;
         } else {
-          if (o2rate == 0.195) {
+          if (air === "3SWD") {
             difcalc = 12;
-          } else if (o2rate == 0.26) {
+          } else if (air === "4SWD") {
             difcalc = 10;
-          } else if (o2rate == 0.325) {
+          } else if (air === "5SWD") {
             difcalc = 8.5;
-          }  else {
-            difcalc = " Something Wrong try again";
+          } else if (air === "6SWD") {
+            difcalc = 0;
           }
-          // document.getElementById("o2rate").value = o2rate;
         }
         
         //air required for defuser
@@ -561,7 +507,7 @@ console.log(mediavolume);
           oxygen,
           alpha,
           beta,
-          o2rate,
+          o2transferrate,
           density,
           percentageofo2,
           workingHr
@@ -580,7 +526,7 @@ console.log(mediavolume);
           oxygennh4,
           alpha,
           beta,
-          o2rate,
+          o2transferrate,
           density,
           percentageofo2,
           workingHr
@@ -663,14 +609,14 @@ console.log(mediavolume);
         oxygen,
         alpha,
         beta,
-        o2rate,
+        o2transferrate,
         density,
         percentageofo2,
         workingHr
       ) {
         return parseFloat(
           oxygen /
-          (alpha * beta * o2rate * density * percentageofo2 * workingHr)
+          (alpha * beta * o2transferrate * density * percentageofo2 * workingHr)
         ).toFixed(2);
       }
 
@@ -690,14 +636,14 @@ console.log(mediavolume);
         oxygennh4,
         alpha,
         beta,
-        o2rate,
+        o2transferrate,
         density,
         percentageofo2,
         workingHr
       ) {
         return parseFloat(
           oxygennh4 /
-          (alpha * beta * o2rate * density * percentageofo2 * workingHr)
+          (alpha * beta * o2transferrate * density * percentageofo2 * workingHr)
         ).toFixed(2);
         mailBtn.addEventListener("click", () => {
         });

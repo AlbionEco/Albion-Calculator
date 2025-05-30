@@ -118,7 +118,11 @@
                 required
               />
             </div>
-          
+            <div>
+              <span style="color: red;">Note: </span> Modified the contact time as per vessel shell height 1800mm/2000mm (If Client Required more height than only change Contact Time accordingly.)
+            </div>
+            <hr style="background-color:white;width:0px">
+
             <!-- SUBMIT BUTTON  -->
             <button type="submit">Submit</button>
           </div>
@@ -157,8 +161,8 @@
             <table id="table">
               <tr>
                 <th></th>
-                <th>Volume (kg)</th>
-                <th>Density Volume (kg)</th>
+                <th>Volume (m<sub>3</sub>)</th>
+                <th>Media Qty (kg)</th>
                 <th>Density (kg/lit)</th>
               </tr>
               <tr>
@@ -273,10 +277,6 @@ let PlantCapacity = 0;
         //dv3 = densityvolume1
         const dv3 =v3 * 1.26;
         document.getElementById("dv3").innerHTML =  parseFloat(dv3).toFixed(1);
-
-        //thickness
-        const rawThickness= document.getElementById('Thickness').value;
-const Thickness = Number(rawThickness);
 // leg Support
 let legSupportValue = 0;
 const LegSupport = document.getElementById("LegSupport").value;

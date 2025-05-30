@@ -260,13 +260,16 @@ width: 110%;
         margin: 20px; 
     }
 
-    #resultsTable, #resultsTable * {
+    #resultsTable, #resultsTable *   
+    #resultsTable1, #resultsTable1 * ,
+    #resultsTable2, #resultsTable2 * {
         visibility: visible;
     }
 
 
-   
-    #resultsTable {
+    #resultsTable,
+    #resultsTable1,
+    #resultsTable2{
         font-size: 15.5px;
         width: 95%; 
         border-collapse: collapse;
@@ -278,25 +281,29 @@ width: 110%;
         page-break-inside: avoid; 
     }
 
-   
-    #resultsTable table , #resultsTable th , #resultsTable table td{
+    #resultsTable table, #resultsTable th, #resultsTable table td,
+    #resultsTable1 table , #resultsTable1 th , #resultsTable1 table td,
+    #resultsTable2 table , #resultsTable2 th , #resultsTable2 table td {
       border: 1px solid #ccc;
     }
 
-   
-    #resultsTable th {
+   #resultsTable th,
+    #resultsTable1 th,
+    #resultsTable2 th{
         background-color: #003c15;
         color: #fff;
     }
 
-    
-    #resultsTable td, #resultsTable th {
+    #resultsTable td, #resultsTable th,
+    #resultsTable1 td, #resultsTable1 th,
+    #resultsTable2 td, #resultsTable2 th {
         padding: 6px;
         text-align: left;
     }
 
-   
-    #resultsTable .heading2, #resultsTable .heading3 {
+    #resultsTable .heading2, #resultsTable .heading3,
+    #resultsTable1 .heading2, #resultsTable1 .heading3,
+    #resultsTable2 .heading2, #resultsTable2 .heading3 {
         padding: 6px;
     }
 }

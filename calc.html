@@ -151,8 +151,16 @@
             </div>
             <div class="fields">
               <label>O2 transfer rate @ </label>
+              <select id="o2transferrate" class="o2transferrate">
+                <option value="0.15">0.15</option>
+                <option value="0.2">0.2</option>
+                <option value="0.25">0.25</option>
+              </select>
+            </div>
+            <div class="fields">
+              <label>Air Diffuser Model</label>
               <!-- drop down -->
-              <select id="o2transfer">
+              <select id="airfine">
                 <option value="airfine1">Airfine - 1</option>
                 <option value="airfine3">Airfine - 3</option>
               </select>
@@ -288,8 +296,8 @@
         const nh4 = document.getElementById("nh4").value;
         const mediaVolume = document.getElementById("mediaVolume").value;
         const mlss = document.getElementById("mlss").value;
-
-        let o2rate = 0;
+        const o2transferrate = document.getElementById("o2transferrate").value;
+        
         const mlvss = (mlss * 80) / 100;
         const workingHr = 24;
         const o2req = 1.2;
@@ -297,7 +305,6 @@
         const beta = 0.7;
         const density = 1.2;
         const percentageofo2 = 0.215;
-        let depth = o2rate;
         const diflength = 1;
         const o2nh4 = 4.6;
 let difcalc = 0;
@@ -378,32 +385,29 @@ let difcalc = 0;
         //oxygen require
         const oxygen = calculateoxygen(bodload, o2req);
 
-        ///o2 rate
-        const o2transfer = document.getElementById("o2transfer").value;
+        ///o2 rate    and
+        //difcalc
+        const airfine = document.getElementById("airfine").value;
         const air = document.getElementById("air").value;
-        if (o2transfer === "airfine1") {
+        if (airfine === "airfine1") {
           if (air === "3SWD") {
-            o2rate = 0.15;
+            difcalc = 7.5;
           } else if (air === "4SWD") {
-            o2rate = 0.2;
+            difcalc = 6.25;
           } else if (air === "5SWD") {
-            o2rate = 0.3;
+            difcalc = 5.5;
           } else if (air === "6SWD") {
-            o2rate = 0.36;
-          } else {
-            o2rate = " Something Wrong try again";
+            difcalc = 0;
           }
         } else {
           if (air === "3SWD") {
-            o2rate = 0.195;
+            difcalc = 12;
           } else if (air === "4SWD") {
-            o2rate = 0.26;
+            difcalc = 10;
           } else if (air === "5SWD") {
-            o2rate = 0.325;
+            difcalc = 8.5;
           } else if (air === "6SWD") {
-            o2rate = 0.39;
-          } else {
-            o2rate = " Something Wrong try again";
+            difcalc = 0;
           }
         }
 
@@ -412,27 +416,13 @@ let difcalc = 0;
           oxygen,
           alpha,
           beta,
-          o2rate,
+          o2transferrate,
           density,
           percentageofo2,
           workingHr
         );
         document.getElementById("airrequired").value = airrequire;
-
-        //difcalc
-        if (o2rate === 0.15) {
-          difcalc = 7.5;
-        } else if (o2rate === 0.2) {
-          difcalc = 6.25;
-        } else if (o2rate === 0.3) {
-          difcalc = 5.5;
-        } else if (o2rate === 0.195) {
-          difcalc = 12;
-        } else if (o2rate === 0.26) {
-          difcalc = 10;
-        } else if (o2rate === 0.325) {
-          difcalc = 8.5;
-        }
+       
        
 
         //no of difuserf
@@ -449,7 +439,7 @@ let difcalc = 0;
           oxygennh4,
           alpha,
           beta,
-          o2rate,
+          o2transferrate,
           density,
           percentageofo2,
           workingHr
@@ -536,14 +526,14 @@ console.log(airrequire,airreqnh4,nettotalair);
         oxygen,
         alpha,
         beta,
-        o2rate,
+        o2transferrate,
         density,
         percentageofo2,
         workingHr
       ) {
         return parseFloat(
           oxygen /
-          (alpha * beta * o2rate * density * percentageofo2 * workingHr)
+          (alpha * beta * o2transferrate * density * percentageofo2 * workingHr)
         ).toFixed(2);
       }
 
@@ -559,14 +549,14 @@ console.log(airrequire,airreqnh4,nettotalair);
         oxygennh4,
         alpha,
         beta,
-        o2rate,
+        o2transferrate,
         density,
         percentageofo2,
         workingHr
       ) {
         return parseFloat(
           oxygennh4 /
-          (alpha * beta * o2rate * density * percentageofo2 * workingHr)
+          (alpha * beta * o2transferrate * density * percentageofo2 * workingHr)
         ).toFixed(2);
       }
     </script>
